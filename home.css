@@ -1,0 +1,42 @@
+/* Solo pantalla de Inicio. No modifica el asistente ni las funciones curriculares. */
+#inicio{padding:30px 38px 46px;max-width:1500px;margin:0 auto}
+#inicio .welcome{background:transparent!important;border:0!important;border-radius:0!important;box-shadow:none!important;min-height:auto!important;padding:4px 4px 18px!important;display:block!important;position:relative!important;overflow:visible!important}
+#inicio .welcome:before{content:'✏️   📚   🔢   🎨'!important;display:block!important;position:absolute!important;top:-4px!important;right:18px!important;font-size:28px!important;line-height:1!important;letter-spacing:3px!important;white-space:nowrap!important;z-index:1!important;pointer-events:none!important}
+#inicio .welcome:after{content:'🌈   🌱   ⭐'!important;display:block!important;position:absolute!important;right:24px!important;bottom:8px!important;font-size:28px!important;line-height:1!important;letter-spacing:5px!important;opacity:.9!important;z-index:1!important;pointer-events:none!important}
+#inicio .welcome h1,#inicio .welcome p{position:relative!important;z-index:2!important}
+#inicio .welcome h1{font-size:34px!important;line-height:1.15!important;margin:0 0 7px!important;color:#172455!important;letter-spacing:-.7px!important}
+#inicio .welcome p{font-size:16px!important;color:#626a7b!important;margin:0!important}
+#inicio .inspiration{min-height:145px!important;margin:0 0 18px!important;padding:23px 30px!important;border-radius:14px!important;background:linear-gradient(100deg,#fff9df,#fff5c9)!important;border:1px solid #f1d98d!important;box-shadow:none!important}
+#inicio .inspiration h2{font-size:19px!important;color:#b45d20!important;margin:0 0 12px!important}
+#inicio .inspiration p{font-size:15px!important;color:#252a35!important;line-height:1.5!important;margin:0 0 6px!important}
+#inicio .inspiration strong{font-size:14px!important;color:#6835c7!important}
+#inicio .inspire-art{font-size:48px!important;margin-right:20px!important;opacity:.9!important}
+#inicio .stats{grid-template-columns:repeat(4,1fr)!important;gap:14px!important;margin:0 0 20px!important}
+#inicio .stat{min-height:108px!important;border-radius:11px!important;padding:18px!important;gap:14px!important;box-shadow:none!important;border:1px solid #e2e4eb!important}
+#inicio .stat>span{width:57px!important;height:57px!important;border-radius:50%!important;font-size:25px!important}
+#inicio .stat b{font-size:28px!important}
+#inicio .stat strong{font-size:15px!important;color:#27304b!important}
+#inicio .stat small{font-size:12px!important;color:#596174!important}
+#inicio .dashboard{grid-template-columns:1fr 1.3fr!important;gap:20px!important;margin-top:0!important}
+#inicio .new-card,#inicio .recent-card{min-height:340px!important;border-radius:12px!important;padding:23px!important;box-shadow:none!important}
+#inicio .new-card{background:linear-gradient(145deg,#fffef7,#fff,#f8f3ff)!important}
+#inicio .new-card:before{content:none!important}
+#inicio .new-card h2{font-size:20px!important;color:#6930ca!important;margin:0 0 10px!important}
+#inicio .new-card>p{font-size:13px!important;margin:0 0 13px!important;color:#333b4d!important}
+#inicio .quick-field{height:67px!important;margin:10px 0!important;border-radius:9px!important;padding:9px 13px!important;box-shadow:none!important}
+#inicio .quick-field>span{font-size:20px!important}
+#inicio .quick-field label{font-size:10px!important}
+#inicio .quick-field strong{font-size:14px!important}
+#inicio .new-card .start-btn{height:48px!important;margin-top:7px!important}
+#inicio .garden{font-size:24px!important;margin:13px -23px -23px!important;padding-top:13px!important}
+#inicio .recent-card{background:#fff!important}
+#inicio .recent-head{margin-bottom:8px!important}
+#inicio .recent-head h2{font-size:19px!important;color:#2877e8!important}
+#inicio .recent-head a{font-size:11px!important}
+#inicio .recent-card article{grid-template-columns:45px 1fr auto 18px!important;min-height:72px!important;padding:9px 11px!important;margin:8px 0!important;border:1px solid #e3e4ea!important;border-left:1px solid #e3e4ea!important;border-radius:10px!important}
+#inicio .recent-icon{width:45px!important;height:45px!important}
+#inicio .recent-card article b{font-size:13px!important}
+#inicio .recent-card article p{font-size:11px!important}
+#inicio .recent-card article time{font-size:9px!important}
+#inicio .all-btn{height:43px!important;margin-top:10px!important;border-radius:10px!important}
+@media(max-width:800px){#inicio{padding:18px 14px 45px!important}#inicio .welcome{padding:18px 3px 20px!important;min-height:170px!important;background:linear-gradient(135deg,#fbf7ff,#fff)!important;border:1px solid #e5d8f7!important;border-radius:22px!important;box-sizing:border-box!important;margin-bottom:14px!important;display:flex!important;flex-direction:column!important;justify-content:center!important}#inicio .welcome:before{top:12px!important;right:14px!important;font-size:20px!important;letter-spacing:1px!important}#inicio .welcome:after{right:13px!important;bottom:13px!important;font-size:21px!important;letter-spacing:2px!important}#inicio .welcome h1{font-size:29px!important;max-width:280px!important;line-height:1.12!important;margin:0 0 10px!important;padding-left:0!important}#inicio .welcome p{font-size:14px!important;line-height:1.45!important;max-width:285px!important}.inspiration{min-height:155px!important;padding:19px 18px!important;margin-bottom:14px!important}.inspiration h2{font-size:18px!important}.inspiration p{font-size:14px!important;max-width:285px!important}.inspire-art{font-size:27px!important;position:absolute!important;right:12px!important;bottom:12px!important;margin:0!important}.stats{grid-template-columns:1fr 1fr!important;gap:9px!important;margin-bottom:14px!important}.stat{min-height:88px!important;padding:12px 10px!important;gap:9px!important}.stat>span{width:43px!important;height:43px!important;font-size:19px!important}.stat b{font-size:23px!important}.stat strong{font-size:12px!important}.stat small{font-size:10px!important}.dashboard{grid-template-columns:1fr!important;gap:13px!important}.new-card,.recent-card{min-height:0!important;padding:18px!important}.recent-card article{grid-template-columns:40px 1fr 16px!important}.recent-card article time{display:none!important}.recent-icon{width:40px!important;height:40px!important}.garden{margin:13px -18px -18px!important}}

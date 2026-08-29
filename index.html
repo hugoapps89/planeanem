@@ -1,0 +1,317 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>PlaneaNEM | Inicio</title><link rel="stylesheet" href="style.css?v=29"></head><body>
+<div class="app"><aside class="sidebar"><a href="#inicio" class="brand-card" id="brandHome" aria-label="Ir a la página principal"><div class="brand-pencil">✏️</div><div><div class="logo">Planea<span>NEM</span></div><p>Planeaciones que enseñan,<br>aprendizajes que transforman.</p></div></a><nav class="menu">
+
+  <button class="menu-item active" data-view="inicio">
+    <span>🏠</span>
+    Inicio
+  </button>
+
+  <button class="menu-item" data-view="nueva">
+    <span>✨</span>
+    Nueva planeación
+  </button>
+
+  <button class="menu-item" data-view="mis">
+    <span>📚</span>
+    Mis planeaciones
+  </button>
+
+  <button class="menu-item" data-view="favoritos">
+    <span>⭐</span>
+    Favoritos
+  </button>
+
+  <button class="menu-item" data-view="perfil">
+    <span>👩‍🏫</span>
+    Mi perfil
+  </button>
+
+  <button class="menu-item" data-view="config">
+    <span>⚙️</span>
+    Configuración
+  </button>
+
+</nav><div class="sidebar-art"><div>✦　★　✦　★</div><div class="rainbow">🌈</div><div class="kids">👧🏻　👦🏻</div><div>📚　🍎</div></div><div class="footer">Hecho con 💜 para docentes<br>© 2025 PlaneaNEM</div></aside>
+<main><header class="topbar"><div class="top-icons"><span class="bell">♧<b>3</b></span><button class="profile"><span class="avatar">👩🏻‍🏫</span> Maestra Luna <span class="chev">⌄</span></button></div></header>
+<section id="inicio" class="view active"><div class="welcome">
+
+  <div class="welcome-content">
+
+    <h1>¡Bienvenido, Docente! 👋</h1>
+
+    <p>
+      Crea experiencias de aprendizaje significativas para tus alumnos.
+    </p>
+
+  </div>
+
+  <div class="welcome-icons" aria-hidden="true">
+    🌈　✏️　📚　⭐
+  </div>
+
+</div><div class="inspiration"><div><h2>★ &nbsp;Inspiración del día</h2><p>"La educación es el arma más poderosa que puedes usar<br> para cambiar el mundo."</p><strong>– Nelson Mandela</strong></div><div class="inspire-art">☁️　🌈　★</div></div><div class="stats"><div class="stat purple"><span>▣</span><div><b>12</b><strong>Planeaciones</strong><small>este mes</small></div></div><div class="stat green"><span>★</span><div><b>8</b><strong>Recursos</strong><small>guardados</small></div></div><div class="stat blue"><span>♥</span><div><b>5</b><strong>Favoritos</strong><small>esta semana</small></div></div><div class="stat pink"><span>▣</span><div><b>3</b><strong>Planeaciones</strong><small>pendientes</small></div></div></div>
+<div class="dashboard"><div class="card new-card"><h2>✦ &nbsp;Nueva planeación</h2><p>Crea tu planeación didáctica de manera fácil y guiada.</p><div class="quick-field"><span>🎓</span><label>Selecciona el grado<strong>1.º Primaria</strong></label><em>⌄</em></div><div class="quick-field"><span>📖</span><label>Selecciona el campo formativo<strong>Lenguajes</strong></label><em>⌄</em></div><button class="start-btn" data-view="nueva">✦ &nbsp;Comenzar nueva planeación</button><div class="garden">🌱　🌼　🌱　🌼　🌱</div></div><div class="card recent-card"><div class="recent-head"><h2>▣ &nbsp;Planeaciones recientes</h2><a>Ver todas</a></div><article><span class="recent-icon tree">🌳</span><div><b>Exploramos la naturaleza que nos rodea</b><p>1.º Primaria · Saberes y Pensamiento Científico</p><small class="done">Completada</small></div><time>20 may 2025</time><i>⋮</i></article><article><span class="recent-icon abc">ABC</span><div><b>Historias que nos conectan</b><p>2.º Primaria · Lenguajes</p><small class="progress">En progreso</small></div><time>18 may 2025</time><i>⋮</i></article><article><span class="recent-icon people">♟♟</span><div><b>Convivimos con respeto y empatía</b><p>3.º Primaria · De lo Humano y lo Comunitario</p><small class="draft">Borrador</small></div><time>15 may 2025</time><i>⋮</i></article><button class="all-btn" data-view="mis">▣ &nbsp; Ver todas mis planeaciones</button></div></div></section>
+<section id="nueva" class="view"><div class="page-head"><span>ASISTENTE DOCENTE</span><h1>Nueva planeación ✨</h1><p>Completa los datos de tu grupo paso a paso.</p></div><div class="planner"><aside><button class="step active" type="button">1. Datos generales</button><button class="step" type="button">2. Contenido y PDA</button><button class="step" type="button">3. Contexto</button><button class="step" type="button">4. Generar</button></aside><form id="form" class="form-card"><section class="wizard-panel active"><h2>🏫 Datos generales</h2><p class="section-help">Completa los datos básicos de tu escuela y del grupo para identificar la planeación.</p><div class="grid"><label>Nombre de la escuela primaria<input id="schoolName"></label><label>CCT<input id="schoolCct"></label><label>Localidad<input id="schoolLocality"></label><label>Zona escolar<input id="schoolZone"></label><label>Fecha de inicio<input id="startDate" type="date"></label></div><div class="wizard-navigation"><button type="button" class="wizard-next">Continuar →</button></div></section><section class="wizard-panel"><h2>📚 Contenido y PDA</h2><p class="section-help">Selecciona los elementos curriculares que orientarán tu planeación.</p><h3>🎓 Datos curriculares</h3><p class="subsection-help">Selecciona el grado, la fase, el campo formativo y la duración del trabajo.</p><div class="grid"><label>Grado<select id="grade"><option>1.º Primaria</option><option>2.º Primaria</option><option>3.º Primaria</option><option>4.º Primaria</option><option>5.º Primaria</option><option>6.º Primaria</option></select></label><label>Fase<select id="phase"><option>Fase 3</option><option>Fase 4</option><option>Fase 5</option></select></label><label>Campo formativo<select id="field"><option>Lenguajes</option><option>Saberes y Pensamiento Científico</option><option>Ética, Naturaleza y Sociedades</option><option>De lo Humano y lo Comunitario</option></select></label><label>Duración<select id="duration"><option>1 semana</option><option>2 semanas</option><option>1 mes</option></select></label></div><h3>🏫 Proyecto</h3><p class="subsection-help">Define el escenario, la metodología y el nombre del proyecto.</p><div class="grid"><label>Escenario<select id="scenario"><option>Aula</option><option>Escuela</option><option>Comunidad</option></select></label><label>Metodología<select id="methodology"><option>Aprendizaje Basado en Proyectos Comunitarios</option><option>Aprendizaje Basado en Indagación (STEAM)</option><option>Aprendizaje Basado en Problemas</option><option>Aprendizaje Servicio</option></select></label><label>Nombre del proyecto<input id="projectName"></label></div><div class="axes-box"><h3>🧭 Ejes articuladores</h3><p class="subsection-help">Selecciona los ejes que se integrarán en la planeación.</p><label><input type="checkbox"> Inclusión</label><label><input type="checkbox"> Pensamiento crítico</label><label><input type="checkbox"> Interculturalidad crítica</label><label><input type="checkbox"> Igualdad de género</label><label><input type="checkbox"> Vida saludable</label><label><input type="checkbox"> Apropiación de las culturas a través de la lectura y la escritura</label><label><input type="checkbox"> Artes y experiencias estéticas</label></div><h3>📖 Contenido</h3><p class="subsection-help">Selecciona el contenido que deseas trabajar.</p><select id="content"><option>Cargando contenidos...</option></select><h3>🎯 PDA</h3><p class="subsection-help">Selecciona los PDA que se incluirán en la planeación.</p><div id="pda" class="pda-list"><div class="pda-empty">Selecciona un contenido para consultar sus PDA.</div></div><div class="wizard-navigation"><button type="button" class="wizard-prev">← Anterior</button><button type="button" class="wizard-next">Continuar →</button></div></section><section class="wizard-panel"><h2>📝 Contexto</h2><p class="section-help">Describe las características, necesidades e intereses de tu grupo para contextualizar la propuesta.</p><textarea id="context" rows="10" placeholder="Contexto y necesidades del grupo..."></textarea><div class="wizard-navigation"><button type="button" class="wizard-prev">← Anterior</button><button type="button" class="wizard-next">Revisar planeación →</button></div></section><section class="wizard-panel"><h2>✨ Generar planeación</h2><p class="section-help">Revisa la información y genera tu propuesta de planeación con ayuda de la IA.</p><div id="planning-review" class="planning-review">
+  <div class="review-empty">
+    Completa los pasos anteriores para revisar tu planeación.
+  </div>
+</div><div class="ai-note">✨ <b>La IA será tu asistente</b><p>Generará una propuesta que podrás revisar y editar.</p></div><div class="wizard-navigation"><button type="button" class="wizard-prev">← Anterior</button><button id="savePlanningBtn" class="start-btn" type="button">💾 Guardar planeación</button></div></section></form></div></section>
+<section id="mis" class="view"><div class="page-head"><h1>📚 Mis planeaciones</h1><p>Todas tus planeaciones en un solo lugar.</p></div><div class="list"></div></section><section id="recursos" class="view placeholder" style="display:none;"><h1>📚 Recursos</h1><p>Recursos didácticos para tus planeaciones.</p></section><section id="favoritos" class="view">
+
+  <div class="page-head">
+    <h1>⭐ Favoritos</h1>
+    <p>Tus planeaciones y contenidos favoritos en un solo lugar.</p>
+  </div>
+
+  <div class="favorites-panel">
+
+    <div class="favorites-header">
+      <div>
+        <h2>⭐ Mis favoritos</h2>
+        <p>Guarda aquí las planeaciones que quieras consultar rápidamente.</p>
+      </div>
+
+      <span class="favorites-count">0 favoritos</span>
+    </div>
+
+    <div class="favorites-empty">
+
+      <div class="favorites-empty-icon">⭐</div>
+
+      <h3>Aún no tienes favoritos</h3>
+
+      <p>
+        Cuando marques una planeación como favorita,
+        aparecerá aquí para que puedas acceder a ella rápidamente.
+      </p>
+
+      <button type="button" class="favorites-go" data-view="mis">
+        📚 Ver mis planeaciones
+      </button>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<section id="plantillas" class="view placeholder" style="display:none;">
+  <h1>▦ Plantillas</h1>
+</section>
+
+
+<section id="perfil" class="view">
+
+  <div class="page-head">
+    <h1>👩‍🏫 Mi perfil</h1>
+    <p>Administra tu información como docente.</p>
+  </div>
+
+  <div class="profile-panel">
+
+    <div class="profile-header">
+
+      <div class="profile-avatar">
+        👩‍🏫
+      </div>
+
+      <div>
+        <h2>Maestra Luna</h2>
+        <p>Docente de educación primaria</p>
+      </div>
+
+      <button type="button" class="profile-edit">
+        ✏️ Editar perfil
+      </button>
+
+    </div>
+
+    <div class="profile-grid">
+
+      <div class="profile-card">
+        <span class="profile-card-icon">🏫</span>
+        <div>
+          <small>Escuela primaria</small>
+          <strong>No registrada</strong>
+        </div>
+      </div>
+
+      <div class="profile-card">
+        <span class="profile-card-icon">🔖</span>
+        <div>
+          <small>CCT</small>
+          <strong>No registrado</strong>
+        </div>
+      </div>
+
+      <div class="profile-card">
+        <span class="profile-card-icon">📍</span>
+        <div>
+          <small>Localidad</small>
+          <strong>No registrada</strong>
+        </div>
+      </div>
+
+      <div class="profile-card">
+        <span class="profile-card-icon">👩‍🏫</span>
+        <div>
+          <small>Tipo de usuario</small>
+          <strong>Docente</strong>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="profile-info">
+
+      <h3>Información de la cuenta</h3>
+
+      <div class="profile-info-row">
+        <span>Nombre</span>
+        <strong>Maestra Luna</strong>
+      </div>
+
+      <div class="profile-info-row">
+        <span>Correo electrónico</span>
+        <strong>No registrado</strong>
+      </div>
+
+      <div class="profile-info-row">
+        <span>Cuenta</span>
+        <strong>Docente</strong>
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<section id="config" class="view">
+
+  <div class="page-head">
+    <h1>⚙️ Configuración</h1>
+    <p>Personaliza el funcionamiento de PlaneaNEM.</p>
+  </div>
+
+  <div class="settings-panel">
+
+    <div class="settings-section">
+
+      <div class="settings-title">
+        <span>👤</span>
+
+        <div>
+          <h2>Preferencias de la cuenta</h2>
+          <p>Configura las opciones relacionadas con tu cuenta.</p>
+        </div>
+      </div>
+
+      <div class="setting-row">
+
+        <div>
+          <strong>Notificaciones</strong>
+          <p>Recibir avisos importantes de PlaneaNEM.</p>
+        </div>
+
+        <label class="switch">
+          <input type="checkbox" checked>
+          <span></span>
+        </label>
+
+      </div>
+
+    </div>
+
+
+    <div class="settings-section">
+
+      <div class="settings-title">
+        <span>🎨</span>
+
+        <div>
+          <h2>Apariencia</h2>
+          <p>Personaliza la apariencia de la plataforma.</p>
+        </div>
+      </div>
+
+      <div class="setting-row">
+
+        <div>
+          <strong>Tema</strong>
+          <p>Selecciona cómo quieres visualizar PlaneaNEM.</p>
+        </div>
+
+        <select class="setting-select">
+          <option>Claro</option>
+          <option>Oscuro</option>
+          <option>Automático</option>
+        </select>
+
+      </div>
+
+    </div>
+
+
+    <div class="settings-section">
+
+      <div class="settings-title">
+        <span>📚</span>
+
+        <div>
+          <h2>Planeaciones</h2>
+          <p>Información sobre tu uso de la plataforma.</p>
+        </div>
+      </div>
+
+      <div class="usage-box">
+
+        <div class="usage-top">
+
+          <div>
+            <small>Planeaciones utilizadas</small>
+            <strong>0 de 3</strong>
+          </div>
+
+          <span>3 disponibles</span>
+
+        </div>
+
+        <div class="usage-bar">
+          <div class="usage-progress"></div>
+        </div>
+
+        <p>
+          Tu límite de planeaciones aparecerá aquí cuando activemos
+          el sistema de cuentas.
+        </p>
+
+      </div>
+
+    </div>
+
+
+    <div class="settings-section danger-section">
+
+      <div class="settings-title">
+        <span>🔒</span>
+
+        <div>
+          <h2>Seguridad</h2>
+          <p>Opciones relacionadas con tu cuenta.</p>
+        </div>
+      </div>
+
+      <button type="button" class="logout-btn">
+        🚪 Cerrar sesión
+      </button>
+
+    </div>
+
+  </div>
+
+</section></main></div>
+<script src="curriculum/fase3.js?v=28"></script><script src="curriculum/fase4.js?v=28"></script><script src="curriculum/fase5.js?v=28"></script><script src="app.js?v=46"></script><script src="curriculum-loader.js?v=31"></script><script>document.getElementById('brandHome')?.addEventListener('click',function(e){e.preventDefault();document.querySelectorAll('.view').forEach(v=>v.classList.toggle('active',v.id==='inicio'));document.querySelectorAll('[data-view]').forEach(x=>x.classList.toggle('active',x.dataset.view==='inicio'));window.scrollTo({top:0,behavior:'smooth'});});</script></body></html>

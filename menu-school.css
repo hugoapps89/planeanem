@@ -1,0 +1,22 @@
+/* Menú escolar colorido para PlaneaNEM */
+.sidebar .menu{gap:7px}
+.sidebar .menu-item{position:relative;height:50px;padding:7px 12px 7px 10px;border-radius:14px;transition:transform .18s ease,background .18s ease,box-shadow .18s ease}
+.sidebar .menu-item span{width:34px;height:34px;min-width:34px;border-radius:10px;background:#ffffff!important;display:inline-flex;align-items:center;justify-content:center;font-size:19px;font-weight:900;box-shadow:0 3px 8px #32117a25;color:#6435c7}
+.sidebar .menu-item:nth-child(1) span{color:#6b35c9;background:#eee7ff!important}
+.sidebar .menu-item:nth-child(2) span{color:#f04479;background:#ffe5ee!important}
+.sidebar .menu-item:nth-child(3) span{color:#e49a16;background:#fff0c9!important}
+.sidebar .menu-item:nth-child(4) span{color:#e63f71;background:#ffe2eb!important}
+.sidebar .menu-item:nth-child(5) span{color:#287bd9;background:#dff0ff!important}
+.sidebar .menu-item:nth-child(6) span{color:#6a43c8;background:#eee7ff!important}
+.sidebar .menu-item:hover{background:#ffffff28;transform:translateX(3px)}
+.sidebar .menu-item.active{background:linear-gradient(90deg,#ffffff38,#ffffff20);box-shadow:inset 4px 0 #ffd34d,0 5px 14px #32117a18}
+.sidebar .menu-item.active span{box-shadow:0 4px 10px #2d126d30;transform:scale(1.04)}
+.sidebar .menu-item:nth-child(2):hover span{background:#ffd9e6!important}
+.sidebar .menu-item:nth-child(3):hover span{background:#ffe7a4!important}
+.sidebar .menu-item:nth-child(4):hover span{background:#ffd3e0!important}
+.sidebar .menu-item:nth-child(5):hover span{background:#cce7ff!important}
+.sidebar .menu-item:nth-child(6):hover span{background:#dfd3ff!important}
+.sidebar:before{content:'✦  🌟  ✏️  📚  🌈';position:absolute;left:18px;top:150px;right:18px;text-align:center;font-size:12px;letter-spacing:4px;opacity:.75;pointer-events:none}
+.sidebar{position:relative}
+.sidebar .footer{font-weight:600;opacity:.95}
+@media(max-width:800px){.sidebar:before{display:none}}

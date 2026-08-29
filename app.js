@@ -42,6 +42,33 @@ const context=document.getElementById('context');
 }
 }));
 
+  // Menú móvil: abrir/cerrar sin alterar la navegación existente.
+  const mobileMenu=document.getElementById('mobileMenu');
+  const mobileMenuBtn=document.getElementById('mobileMenuBtn');
+  const mobileMenuClose=document.getElementById('mobileMenuClose');
+  const mobileMenuOverlay=document.getElementById('mobileMenuOverlay');
+  function closeMobileMenu(){
+    document.body.classList.remove('mobile-menu-open');
+    mobileMenuBtn?.setAttribute('aria-expanded','false');
+    mobileMenu?.setAttribute('aria-hidden','true');
+    mobileMenuOverlay?.setAttribute('aria-hidden','true');
+  }
+  function openMobileMenu(){
+    document.body.classList.add('mobile-menu-open');
+    mobileMenuBtn?.setAttribute('aria-expanded','true');
+    mobileMenu?.setAttribute('aria-hidden','false');
+    mobileMenuOverlay?.setAttribute('aria-hidden','false');
+  }
+  mobileMenuBtn?.addEventListener('click',openMobileMenu);
+  mobileMenuClose?.addEventListener('click',closeMobileMenu);
+  mobileMenuOverlay?.addEventListener('click',closeMobileMenu);
+  mobileMenu?.querySelectorAll('[data-view]').forEach(button=>{
+    button.addEventListener('click',()=>{
+      setTimeout(closeMobileMenu,0);
+    });
+  });
+  document.addEventListener('keydown',e=>{if(e.key==='Escape')closeMobileMenu();});
+
   function clean(s){
     return String(s??'')
       .replace(/[\u00ad\u200b\u200c\u200d]/g,'')

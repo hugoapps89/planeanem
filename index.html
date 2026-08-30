@@ -33,25 +33,23 @@
   </button>
 
 </nav><div class="sidebar-art"><div>✦　★　✦　★</div><div class="rainbow">🌈</div><div class="kids">👧🏻　👦🏻</div><div>📚　🍎</div></div><div class="footer">Hecho con 💜 para docentes<br>© 2025 PlaneaNEM</div></aside>
-<main>
-<header class="topbar">
-<button type="button" class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Abrir menú">☰</button>
+<main><header class="topbar">
+<button type="button" class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Abrir menú" aria-expanded="false">☰</button>
 <div class="top-icons"><span class="bell">♧<b>3</b></span><button class="profile"><span class="avatar">👩🏻‍🏫</span> Maestra Luna <span class="chev">⌄</span></button></div></header>
 
-<div class="mobile-menu-overlay" id="mobileMenuOverlay"></div>
-
-<aside class="mobile-menu" id="mobileMenu">
+<div class="mobile-menu-overlay" id="mobileMenuOverlay" aria-hidden="true"></div>
+<aside class="mobile-menu" id="mobileMenu" aria-hidden="true">
   <div class="mobile-menu-header">
-    <strong>Planea<span>NEM</span></strong>
-    <button type="button" id="mobileMenuClose" aria-label="Cerrar menú">✕</button>
+    <div class="mobile-menu-brand"><span>✏️</span><strong>Planea<span>NEM</span></strong></div>
+    <button type="button" class="mobile-menu-close" id="mobileMenuClose" aria-label="Cerrar menú">✕</button>
   </div>
-  <nav class="mobile-menu-nav">
-    <button type="button" data-view="inicio">🏠 <span>Inicio</span></button>
-    <button type="button" data-view="nueva">✨ <span>Nueva planeación</span></button>
-    <button type="button" data-view="mis">📚 <span>Mis planeaciones</span></button>
-    <button type="button" data-view="favoritos">⭐ <span>Favoritos</span></button>
-    <button type="button" data-view="perfil">👩‍🏫 <span>Mi perfil</span></button>
-    <button type="button" data-view="config">⚙️ <span>Configuración</span></button>
+  <nav class="mobile-menu-nav" aria-label="Menú principal móvil">
+    <button type="button" class="mobile-menu-item active" data-view="inicio"><span>🏠</span>Inicio</button>
+    <button type="button" class="mobile-menu-item" data-view="nueva"><span>✨</span>Nueva planeación</button>
+    <button type="button" class="mobile-menu-item" data-view="mis"><span>📚</span>Mis planeaciones</button>
+    <button type="button" class="mobile-menu-item" data-view="favoritos"><span>⭐</span>Favoritos</button>
+    <button type="button" class="mobile-menu-item" data-view="perfil"><span>👩🏻‍🏫</span>Mi perfil</button>
+    <button type="button" class="mobile-menu-item" data-view="config"><span>⚙️</span>Configuración</button>
   </nav>
 </aside>
 

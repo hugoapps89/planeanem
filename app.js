@@ -815,73 +815,67 @@ const fieldIcon =
     });
 
   });
-    list.querySelectorAll('.favorite-planning').forEach(button => {
 
-  button.addEventListener('click', function () {
+  /* =========================================================
+     FAVORITOS — GUARDADO Y SINCRONIZACIÓN
+     ========================================================= */
+  const favoriteButtons = list.querySelectorAll('.favorite-planning');
 
-    const id = Number(this.dataset.id);
+  favoriteButtons.forEach(button => {
+    button.addEventListener('click', function(e) {
+      e.preventDefault();
+      e.stopPropagation();
 
-    console.log('Favorito pulsado. ID:', id);
+      const id = String(this.dataset.id);
 
-    let saved;
+      let saved = [];
+      try {
+        saved = JSON.parse(
+          localStorage.getItem('planeanem_planeaciones') || '[]'
+        );
+        if(!Array.isArray(saved)) saved = [];
+      } catch(error) {
+        console.error('No se pudieron leer las planeaciones:', error);
+        return;
+      }
 
-    try {
-
-      saved = JSON.parse(
-        localStorage.getItem('planeanem_planeaciones') || '[]'
+      const planning = saved.find(
+        item => String(item.id) === id
       );
 
-    } catch (error) {
+      if(!planning) {
+        console.error('No se encontró la planeación con ID:', id);
+        return;
+      }
 
-      console.error('No se pudieron leer las planeaciones:', error);
-      return;
+      // Acepta tanto booleanos como valores antiguos guardados como texto.
+      const isFavorite =
+        planning.favorite === true ||
+        planning.favorite === 'true' ||
+        planning.favorite === 1 ||
+        planning.favorite === '1';
 
-    }
+      planning.favorite = !isFavorite;
 
-    const planning = saved.find(
-      item => Number(item.id) === id
-    );
+      try {
+        localStorage.setItem(
+          'planeanem_planeaciones',
+          JSON.stringify(saved)
+        );
+      } catch(error) {
+        console.error('No se pudo guardar el favorito:', error);
+        return;
+      }
 
-    if (!planning) {
-
-      console.error(
-        'No se encontró la planeación con ID:',
-        id
-      );
-
-      return;
-    }
-
-    planning.favorite = planning.favorite !== true;
-
-    console.log(
-      'Estado favorito:',
-      planning.favorite
-    );
-
-    localStorage.setItem(
-      'planeanem_planeaciones',
-      JSON.stringify(saved)
-    );
-
-    updateHomeStats();
-
-    this.innerHTML = planning.favorite
-      ? '⭐ En favoritos'
-      : '⭐ Agregar a favoritos';
-
-    // Actualizar inmediatamente ambas vistas para que el favorito
-    // aparezca en Favoritos sin necesidad de recargar la página.
-    renderSavedPlannings();
-    if(document.querySelector('#favoritos.active')){
+      // Actualizar todas las vistas que dependen del mismo almacenamiento.
+      updateHomeStats();
+      renderSavedPlannings();
       renderFavoritePlannings();
-    }
-
+    });
   });
 
-});
-
 }
+
 window.openSavedPlanning = function(id){
   let saved = [];
 

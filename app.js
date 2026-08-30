@@ -870,6 +870,13 @@ const fieldIcon =
       ? '⭐ En favoritos'
       : '⭐ Agregar a favoritos';
 
+    // Actualizar inmediatamente ambas vistas para que el favorito
+    // aparezca en Favoritos sin necesidad de recargar la página.
+    renderSavedPlannings();
+    if(document.querySelector('#favoritos.active')){
+      renderFavoritePlannings();
+    }
+
   });
 
 });

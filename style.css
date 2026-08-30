@@ -3058,3 +3058,82 @@
     box-sizing: border-box;
   }
 }
+
+
+/* ==========================================================
+   PLAN CON IA — FIX FINAL DE MENÚ RESPONSIVO
+   ========================================================== */
+
+/* BASE: los controles exclusivos del móvil están ocultos */
+.mobile-menu-btn,
+.mobile-top-logo,
+.mobile-menu,
+.mobile-menu-overlay {
+  display: none !important;
+}
+
+/* ESCRITORIO: 801px en adelante */
+@media screen and (min-width: 801px) {
+  body .mobile-menu-btn,
+  body #mobileMenuBtn,
+  body .mobile-top-logo,
+  body #mobileMenu,
+  body .mobile-menu,
+  body #mobileMenuOverlay,
+  body .mobile-menu-overlay {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+  }
+}
+
+/* MÓVIL: 800px o menos */
+@media screen and (max-width: 800px) {
+  body .mobile-menu-btn,
+  body #mobileMenuBtn {
+    display: grid !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    pointer-events: auto !important;
+  }
+
+  body .mobile-menu {
+    display: flex !important;
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: min(86vw, 350px) !important;
+    height: 100vh !important;
+    height: 100dvh !important;
+    z-index: 1000 !important;
+    transform: translate3d(-110%, 0, 0) !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+    overflow-y: auto !important;
+  }
+
+  body.mobile-menu-open .mobile-menu {
+    transform: translate3d(0, 0, 0) !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    pointer-events: auto !important;
+  }
+
+  body .mobile-menu-overlay {
+    display: block !important;
+    position: fixed !important;
+    inset: 0 !important;
+    z-index: 999 !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+  }
+
+  body.mobile-menu-open .mobile-menu-overlay {
+    opacity: 1 !important;
+    visibility: visible !important;
+    pointer-events: auto !important;
+  }
+}

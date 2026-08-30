@@ -3446,3 +3446,169 @@
     padding-right: 5px !important;
   }
 }
+
+/* =========================================================
+   PLAN CON IA — CELULAR V5
+   Última capa: encabezado y encabezados de vistas
+   ========================================================= */
+@media screen and (max-width:800px){
+
+  /* Nunca dibujar el nombre antiguo sobre el encabezado. */
+  header.topbar::before,
+  header.topbar::after{
+    content:none !important;
+    display:none !important;
+  }
+
+  header.topbar{
+    display:grid !important;
+    grid-template-columns:44px minmax(72px,1fr) max-content !important;
+    align-items:center !important;
+    gap:6px !important;
+    height:76px !important;
+    min-height:76px !important;
+    padding:0 8px !important;
+    overflow:visible !important;
+    position:sticky !important;
+    top:0 !important;
+    z-index:100 !important;
+  }
+
+  header.topbar .mobile-menu-btn{
+    display:grid !important;
+    grid-column:1 !important;
+    grid-row:1 !important;
+    position:static !important;
+    transform:none !important;
+    width:44px !important;
+    height:44px !important;
+    min-width:44px !important;
+    min-height:44px !important;
+    margin:0 !important;
+    padding:0 !important;
+  }
+
+  header.topbar .mobile-top-logo{
+    display:block !important;
+    grid-column:2 !important;
+    grid-row:1 !important;
+    position:static !important;
+    transform:none !important;
+    width:100px !important;
+    max-width:100px !important;
+    height:56px !important;
+    margin:0 !important;
+    object-fit:contain !important;
+    object-position:left center !important;
+  }
+
+  header.topbar .top-icons{
+    display:flex !important;
+    grid-column:3 !important;
+    grid-row:1 !important;
+    width:auto !important;
+    min-width:0 !important;
+    margin:0 !important;
+    align-items:center !important;
+    justify-content:flex-end !important;
+  }
+
+  header.topbar .bell{
+    display:none !important;
+  }
+
+  header.topbar .top-icons .profile{
+    display:flex !important;
+    align-items:center !important;
+    justify-content:center !important;
+    width:auto !important;
+    max-width:128px !important;
+    min-width:0 !important;
+    margin:0 !important;
+    padding:6px 7px !important;
+    gap:3px !important;
+    font-size:10.5px !important;
+    line-height:1.1 !important;
+    white-space:nowrap !important;
+    overflow:hidden !important;
+    text-overflow:ellipsis !important;
+  }
+
+  header.topbar .top-icons .profile .avatar{
+    flex:0 0 auto !important;
+    font-size:18px !important;
+  }
+
+  header.topbar .top-icons .profile .chev{
+    flex:0 0 auto !important;
+  }
+
+  /* Nada decorativo puede flotar sobre la descripción. */
+  .view .page-head::before,
+  .view .page-head::after,
+  .view > .page-head::before,
+  .view > .page-head::after,
+  #nueva .page-head::before,
+  #nueva .page-head::after,
+  #mis .page-head::before,
+  #mis .page-head::after,
+  #favoritos .page-head::before,
+  #favoritos .page-head::after,
+  #perfil .page-head::before,
+  #perfil .page-head::after,
+  #config .page-head::before,
+  #config .page-head::after{
+    content:none !important;
+    display:none !important;
+    background:none !important;
+  }
+
+  .view > .page-head{
+    overflow:hidden !important;
+    min-height:0 !important;
+    height:auto !important;
+    padding:18px !important;
+  }
+
+  .view > .page-head h1{
+    position:static !important;
+    display:block !important;
+    max-width:100% !important;
+    margin:4px 0 8px !important;
+    padding:0 !important;
+    font-size:24px !important;
+    line-height:1.2 !important;
+  }
+
+  .view > .page-head p{
+    position:static !important;
+    display:block !important;
+    max-width:100% !important;
+    margin:0 !important;
+    padding:0 !important;
+    font-size:13px !important;
+    line-height:1.5 !important;
+  }
+}
+
+@media screen and (max-width:380px){
+  header.topbar{
+    grid-template-columns:41px minmax(65px,1fr) max-content !important;
+    gap:4px !important;
+    padding:0 6px !important;
+  }
+  header.topbar .mobile-menu-btn{
+    width:41px !important;
+    height:41px !important;
+    min-width:41px !important;
+    min-height:41px !important;
+  }
+  header.topbar .mobile-top-logo{
+    width:88px !important;
+    max-width:88px !important;
+  }
+  header.topbar .top-icons .profile{
+    max-width:119px !important;
+    font-size:10px !important;
+  }
+}

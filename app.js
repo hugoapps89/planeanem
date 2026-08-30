@@ -16,6 +16,7 @@ const scenario=document.getElementById('scenario');
 const methodology=document.getElementById('methodology');
 const projectName=document.getElementById('projectName');
 const context=document.getElementById('context');
+  const bapOther=document.getElementById('bapOther');
   const phaseByGrade={1:3,2:3,3:4,4:4,5:5,6:5};
 
   function show(id){
@@ -31,9 +32,6 @@ const context=document.getElementById('context');
 
   show(view);
 
-  if(view === 'inicio'){
-    renderHomeRecentPlannings();
-  }
   if(view === 'mis'){
     renderSavedPlannings();
   }
@@ -180,7 +178,7 @@ const context=document.getElementById('context');
   s.addEventListener('click',()=>{
     showStep(i);
 
-    if(i===3 && typeof window.updatePlanningReview==='function'){
+    if(i===4 && typeof window.updatePlanningReview==='function'){
       window.updatePlanningReview();
     }
   });
@@ -190,11 +188,11 @@ document.querySelectorAll('.wizard-next').forEach(b=>{
   b.addEventListener('click',()=>{
     const panel = b.closest('.wizard-panel');
     const index = [...document.querySelectorAll('.wizard-panel')].indexOf(panel);
-    const next = Math.min(3,index+1);
+    const next = Math.min(4,index+1);
 
     showStep(next);
 
-    if(next===3 && typeof window.updatePlanningReview==='function'){
+    if(next===4 && typeof window.updatePlanningReview==='function'){
       window.updatePlanningReview();
     }
   });
@@ -208,11 +206,29 @@ document.querySelectorAll('.wizard-prev').forEach(b=>{
 
     showStep(previous);
 
-    if(previous===3 && typeof window.updatePlanningReview==='function'){
+    if(previous===4 && typeof window.updatePlanningReview==='function'){
       window.updatePlanningReview();
     }
   });
 });
+// "Sin BAP identificadas" es excluyente de las demás opciones.
+  const bapInputs = [...document.querySelectorAll('input[name="bap"]')];
+  const noBap = bapInputs.find(input =>
+    input.value === 'No se identifican barreras para el aprendizaje y la comunicación'
+  );
+
+  bapInputs.forEach(input => {
+    input.addEventListener('change', () => {
+      if(input === noBap && input.checked){
+        bapInputs.forEach(other => {
+          if(other !== noBap) other.checked = false;
+        });
+      }else if(input !== noBap && input.checked && noBap){
+        noBap.checked = false;
+      }
+    });
+  });
+
   grade?.addEventListener('change',refresh);field?.addEventListener('change',refresh);
   content?.addEventListener('change',()=>{const arr=itemsFor();renderPdas(arr[Number(content.value)]);});
   function getSelectedPdas(){
@@ -225,6 +241,16 @@ function getSelectedAxes(){
   return [...document.querySelectorAll('.axes-box input[type="checkbox"]:checked')]
     .map(input => input.parentElement.textContent.trim())
     .filter(Boolean);
+}
+
+function getSelectedBap(){
+  return [...document.querySelectorAll('input[name="bap"]:checked')]
+    .map(input => input.value.trim())
+    .filter(Boolean);
+}
+
+function getBapOther(){
+  return document.getElementById('bapOther')?.value.trim() || '';
 }
 
 function collectPlanningData(){
@@ -253,7 +279,10 @@ function collectPlanningData(){
     content: selectedContent?.content || '',
     pdas: getSelectedPdas(),
 
-    context: document.getElementById('context')?.value.trim() || ''
+    context: document.getElementById('context')?.value.trim() || '',
+
+    bap: getSelectedBap(),
+    bapOther: getBapOther()
   };
 }
 
@@ -324,6 +353,12 @@ function renderPlanningReview(data){
         <strong>Ejes articuladores</strong>
         ${list(data.axes, 'No se seleccionaron ejes articuladores.')}
       </div>
+    </div>
+
+    <div class="review-section">
+      <div class="review-title">♿ Barreras para el aprendizaje y la comunicación (BAP)</div>
+      ${list(data.bap, 'No se identificaron BAP.')}
+      ${data.bapOther ? `<div class="review-content"><strong>Precisiones</strong><p>${esc(data.bapOther)}</p></div>` : ''}
     </div>
 
     <div class="review-section">
@@ -422,72 +457,6 @@ function updateMisStats(saved){
   if(values[1]) values[1].textContent = complete;
   if(values[2]) values[2].textContent = editing;
   if(values[3]) values[3].textContent = favorites;
-}
-
-function renderHomeRecentPlannings(){
-  const container=document.querySelector('#inicio .recent-card');
-  if(!container)return;
-
-  let saved=[];
-  try{saved=JSON.parse(localStorage.getItem('planeanem_planeaciones')||'[]');}
-  catch(error){console.error('Error leyendo planeaciones recientes:',error);}
-
-  const esc=value=>String(value??'')
-    .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
-    .replace(/"/g,'&quot;').replace(/'/g,'&#039;');
-
-  const fieldIcon=field=>{
-    const f=String(field||'');
-    if(f.includes('Lenguajes'))return '📖';
-    if(f.includes('Saberes y Pensamiento'))return '🔬';
-    if(f.includes('Naturaleza y Sociedades'))return '🌿';
-    if(f.includes('Humano y lo Comunitario'))return '❤️';
-    return '📚';
-  };
-
-  const recent=[...saved].sort((a,b)=>{
-    const da=new Date(a.updatedAt||a.createdAt||0).getTime();
-    const db=new Date(b.updatedAt||b.createdAt||0).getTime();
-    return db-da;
-  }).slice(0,3);
-
-  let html=`<div class="recent-head"><h2>📚 Planeaciones recientes</h2><a href="#" id="homeRecentAll">Ver todas</a></div>`;
-
-  if(!recent.length){
-    html+=`<div class="home-recent-empty"><div class="home-recent-empty-icon">📚</div><strong>Aún no tienes planeaciones</strong><p>Crea tu primera planeación para verla aquí.</p></div>`;
-  }else{
-    html+=recent.map(planning=>{
-      const raw=planning.updatedAt||planning.createdAt;
-      let date='Sin fecha';
-      if(raw){const d=new Date(raw);if(!Number.isNaN(d.getTime()))date=d.toLocaleDateString('es-MX',{day:'numeric',month:'short',year:'numeric'});}
-      return `<article class="home-recent-item" data-id="${esc(planning.id)}" tabindex="0" role="button">
-        <span class="recent-icon">${fieldIcon(planning.field)}</span>
-        <div class="home-recent-main">
-          <b>${esc(planning.projectName||'Planeación sin nombre')}</b>
-          <p>${esc(planning.grade||'Grado no indicado')}${planning.field?' · '+esc(planning.field):''}</p>
-          <small>${esc(planning.phase||'Fase no indicada')} · ${esc(date)}</small>
-        </div>
-        <i class="home-recent-arrow">›</i>
-      </article>`;
-    }).join('');
-    html+=`<button type="button" class="all-btn" id="homeRecentAllBtn">📚 Ver todas mis planeaciones</button>`;
-  }
-
-  container.innerHTML=html;
-
-  const goAll=()=>document.querySelector('[data-view="mis"]')?.click();
-  container.querySelector('#homeRecentAll')?.addEventListener('click',e=>{e.preventDefault();goAll();});
-  container.querySelector('#homeRecentAllBtn')?.addEventListener('click',goAll);
-
-  container.querySelectorAll('.home-recent-item').forEach(item=>{
-    const open=()=>{
-      const id=Number(item.dataset.id);
-      if(typeof window.openSavedPlanning==='function')window.openSavedPlanning(id);
-      else{document.querySelector('[data-view="mis"]')?.click();}
-    };
-    item.addEventListener('click',open);
-    item.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();open();}});
-  });
 }
 
 function renderSavedPlannings(){
@@ -819,6 +788,21 @@ window.openSavedPlanning = function(id){
     context.value = planning.context || '';
   }
 
+// Barreras para el aprendizaje y la comunicación (BAP)
+  const selectedBap = new Set(
+    (planning.bap || []).map(bap => clean(bap))
+  );
+
+  document
+    .querySelectorAll('input[name="bap"]')
+    .forEach(input => {
+      input.checked = selectedBap.has(clean(input.value));
+    });
+
+  if(bapOther){
+    bapOther.value = planning.bapOther || '';
+  }
+
   // Actualizar contenidos de acuerdo con grado/campo
   refresh();
 
@@ -878,8 +862,8 @@ window.openSavedPlanning = function(id){
         // Actualizar revisión
         renderPlanningReview(planning);
 
-        // Ir al paso 4
-        showStep(3);
+        // Ir al paso 5 (Generar)
+        showStep(4);
 
       },150);
     }
@@ -910,8 +894,6 @@ function handleSavePlanning(){
 
   renderPlanningReview(saved);
 
-  renderHomeRecentPlannings();
-
   renderSavedPlannings();
 
   if(wasEditing){
@@ -924,9 +906,7 @@ function handleSavePlanning(){
   ?.addEventListener('click', handleSavePlanning);  document.getElementById('gradeBtn')?.addEventListener('click',()=>{show('nueva');grade?.focus();});
   document.getElementById('fieldBtn')?.addEventListener('click',()=>{show('nueva');field?.focus();});
   const st=document.createElement('style');st.textContent='.pda-list,.pda-choice{box-sizing:border-box}.pda-choice{display:flex!important;align-items:flex-start;gap:11px;padding:13px!important;margin:0 0 8px!important;background:#fff!important;border:2px solid #e6e0f2!important;border-radius:12px!important;cursor:pointer!important;font-size:13px!important;line-height:1.45}.pda-choice input{width:18px!important;height:18px!important;margin:2px 0 0!important;flex:none;accent-color:#743bd0}.pda-number{font-weight:900;color:#7147c5;min-width:18px}.pda-text{flex:1}.pda-choice:has(input:checked){border-color:#b99be9!important;background:#f8f3ff!important}.pda-empty{padding:12px;border-radius:10px;background:#f7f5fa;color:#777}';document.head.appendChild(st);
-  refresh();
-  renderHomeRecentPlannings();
-  show('inicio');
+  refresh();show('inicio');
 }
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();
 })();
@@ -1144,43 +1124,3 @@ function renderFavoritePlannings() {
   });
 
 }
-/* ==========================================================
-   PLAN CON IA — CONTROL DEL MENÚ MÓVIL
-   ========================================================== */
-(function(){
-  function initMobileMenu(){
-    const btn=document.getElementById('mobileMenuBtn');
-    const menu=document.getElementById('mobileMenu');
-    const close=document.getElementById('mobileMenuClose');
-    const overlay=document.getElementById('mobileMenuOverlay');
-    if(!btn || !menu) return;
-
-    const closeMenu=()=>{
-      document.body.classList.remove('mobile-menu-open');
-      btn.setAttribute('aria-expanded','false');
-      menu.setAttribute('aria-hidden','true');
-      if(overlay) overlay.setAttribute('aria-hidden','true');
-    };
-    const openMenu=()=>{
-      if(window.innerWidth>800) return;
-      document.body.classList.add('mobile-menu-open');
-      btn.setAttribute('aria-expanded','true');
-      menu.setAttribute('aria-hidden','false');
-      if(overlay) overlay.setAttribute('aria-hidden','false');
-    };
-
-    btn.addEventListener('click',e=>{
-      e.preventDefault();
-      e.stopPropagation();
-      document.body.classList.contains('mobile-menu-open') ? closeMenu() : openMenu();
-    });
-    close?.addEventListener('click',e=>{e.preventDefault();closeMenu();});
-    overlay?.addEventListener('click',closeMenu);
-    menu.querySelectorAll('[data-view]').forEach(item=>item.addEventListener('click',closeMenu));
-    document.addEventListener('keydown',e=>{if(e.key==='Escape') closeMenu();});
-    window.addEventListener('resize',()=>{if(window.innerWidth>800) closeMenu();});
-    closeMenu();
-  }
-  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',initMobileMenu,{once:true});
-  else initMobileMenu();
-})();

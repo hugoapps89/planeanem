@@ -32,6 +32,9 @@ const context=document.getElementById('context');
   show(view);
 
   if(view === 'inicio'){
+    let homeSaved=[];
+    try{homeSaved=JSON.parse(localStorage.getItem('planeanem_planeaciones')||'[]');}catch(error){}
+    updateHomeStats(homeSaved);
     renderHomeRecentPlannings();
   }
   if(view === 'mis'){
@@ -41,33 +44,6 @@ const context=document.getElementById('context');
   renderFavoritePlannings();
 }
 }));
-
-  // Menú móvil: abrir/cerrar sin alterar la navegación existente.
-  const mobileMenu=document.getElementById('mobileMenu');
-  const mobileMenuBtn=document.getElementById('mobileMenuBtn');
-  const mobileMenuClose=document.getElementById('mobileMenuClose');
-  const mobileMenuOverlay=document.getElementById('mobileMenuOverlay');
-  function closeMobileMenu(){
-    document.body.classList.remove('mobile-menu-open');
-    mobileMenuBtn?.setAttribute('aria-expanded','false');
-    mobileMenu?.setAttribute('aria-hidden','true');
-    mobileMenuOverlay?.setAttribute('aria-hidden','true');
-  }
-  function openMobileMenu(){
-    document.body.classList.add('mobile-menu-open');
-    mobileMenuBtn?.setAttribute('aria-expanded','true');
-    mobileMenu?.setAttribute('aria-hidden','false');
-    mobileMenuOverlay?.setAttribute('aria-hidden','false');
-  }
-  mobileMenuBtn?.addEventListener('click',openMobileMenu);
-  mobileMenuClose?.addEventListener('click',closeMobileMenu);
-  mobileMenuOverlay?.addEventListener('click',closeMobileMenu);
-  mobileMenu?.querySelectorAll('[data-view]').forEach(button=>{
-    button.addEventListener('click',()=>{
-      setTimeout(closeMobileMenu,0);
-    });
-  });
-  document.addEventListener('keydown',e=>{if(e.key==='Escape')closeMobileMenu();});
 
   function clean(s){
     return String(s??'')
@@ -432,6 +408,39 @@ function savePlanning(planning){
 
   return record;
 }
+function updateHomeStats(saved){
+  const totalEl=document.querySelector('#homeStatTotal');
+  const favEl=document.querySelector('#homeStatFavorites');
+  const lastEl=document.querySelector('#homeStatLast');
+  const planEl=document.querySelector('#homeStatPlan');
+
+  if(totalEl) totalEl.textContent=saved.length;
+  if(favEl) favEl.textContent=saved.filter(item=>item.favorite===true).length;
+
+  if(lastEl){
+    const latest=[...saved].sort((a,b)=>{
+      const da=new Date(a.updatedAt||a.createdAt||0).getTime();
+      const db=new Date(b.updatedAt||b.createdAt||0).getTime();
+      return db-da;
+    })[0];
+    if(latest){
+      const raw=latest.updatedAt||latest.createdAt;
+      const date=new Date(raw);
+      lastEl.textContent=Number.isNaN(date.getTime())
+        ? 'Sin fecha'
+        : date.toLocaleDateString('es-MX',{day:'numeric',month:'short',year:'numeric'});
+    }else{
+      lastEl.textContent='Sin planeaciones';
+    }
+  }
+
+  if(planEl){
+    const raw=localStorage.getItem('planeanem_plan_actual') || localStorage.getItem('planeanem_plan') || 'gratuito';
+    const value=String(raw).toLowerCase().trim();
+    planEl.textContent=value.includes('ilimit')?'ILIMITADO':value==='pro'?'PRO':'GRATUITO';
+  }
+}
+
 function updateMisStats(saved){
   const stats = document.querySelector('#misStats');
   if(!stats) return;
@@ -937,6 +946,7 @@ function handleSavePlanning(){
 
   renderPlanningReview(saved);
 
+  updateHomeStats(saved);
   renderHomeRecentPlannings();
 
   renderSavedPlannings();
@@ -952,6 +962,9 @@ function handleSavePlanning(){
   document.getElementById('fieldBtn')?.addEventListener('click',()=>{show('nueva');field?.focus();});
   const st=document.createElement('style');st.textContent='.pda-list,.pda-choice{box-sizing:border-box}.pda-choice{display:flex!important;align-items:flex-start;gap:11px;padding:13px!important;margin:0 0 8px!important;background:#fff!important;border:2px solid #e6e0f2!important;border-radius:12px!important;cursor:pointer!important;font-size:13px!important;line-height:1.45}.pda-choice input{width:18px!important;height:18px!important;margin:2px 0 0!important;flex:none;accent-color:#743bd0}.pda-number{font-weight:900;color:#7147c5;min-width:18px}.pda-text{flex:1}.pda-choice:has(input:checked){border-color:#b99be9!important;background:#f8f3ff!important}.pda-empty{padding:12px;border-radius:10px;background:#f7f5fa;color:#777}';document.head.appendChild(st);
   refresh();
+  let homeSaved=[];
+  try{homeSaved=JSON.parse(localStorage.getItem('planeanem_planeaciones')||'[]');}catch(error){}
+  updateHomeStats(homeSaved);
   renderHomeRecentPlannings();
   show('inicio');
 }

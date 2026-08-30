@@ -2788,3 +2788,213 @@
 @media (max-width:380px) {
   .mobile-top-logo { left: 57px; width: 112px; height: 50px; }
 }
+
+/* =========================================================
+   PLAN CON IA — NAVEGACIÓN RESPONSIVA DEFINITIVA
+   ========================================================= */
+
+/* Escritorio: los elementos exclusivos del menú móvil NO existen visualmente */
+.mobile-menu-btn,
+.mobile-top-logo,
+.mobile-menu,
+.mobile-menu-overlay {
+  display: none !important;
+}
+
+/* Móvil */
+@media (max-width: 800px) {
+  .mobile-menu-btn {
+    display: grid !important;
+    place-items: center;
+    position: absolute;
+    left: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    border: 0;
+    border-radius: 12px;
+    background: #f1e8ff;
+    color: #6735c7;
+    font-family: inherit;
+    font-size: 26px;
+    line-height: 1;
+    font-weight: 900;
+    cursor: pointer;
+    z-index: 1200;
+  }
+
+  .mobile-top-logo {
+    display: block !important;
+    position: absolute;
+    left: 64px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 112px;
+    height: 50px;
+    object-fit: contain;
+    object-position: left center;
+    z-index: 25;
+  }
+
+  .mobile-menu-overlay {
+    display: block !important;
+    position: fixed !important;
+    inset: 0;
+    background: rgba(25, 18, 45, .38);
+    z-index: 998;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity .25s ease, visibility 0s linear .25s;
+  }
+
+  .mobile-menu {
+    display: flex !important;
+    position: fixed !important;
+    top: 0;
+    left: 0;
+    width: min(86vw, 350px);
+    height: 100vh;
+    height: 100dvh;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    background: #fff;
+    z-index: 999;
+    transform: translate3d(-110%, 0, 0);
+    visibility: hidden;
+    opacity: 0;
+    pointer-events: none;
+    box-shadow: 8px 0 30px rgba(40,20,70,.18);
+    transition: transform .28s ease, opacity .2s ease,
+                visibility 0s linear .28s;
+    flex-direction: column;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  body.mobile-menu-open .mobile-menu {
+    transform: translate3d(0,0,0);
+    visibility: visible;
+    opacity: 1;
+    pointer-events: auto;
+    transition: transform .28s ease, opacity .2s ease,
+                visibility 0s linear 0s;
+  }
+
+  body.mobile-menu-open .mobile-menu-overlay {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transition: opacity .25s ease, visibility 0s linear 0s;
+  }
+
+  body.mobile-menu-open {
+    overflow: hidden;
+  }
+
+  .mobile-menu-header {
+    min-height: 78px;
+    padding: 12px 14px 12px 18px;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid #eee7f7;
+    background: linear-gradient(135deg,#faf7ff,#fff);
+    flex-shrink: 0;
+  }
+
+  .mobile-menu-brand {
+    display: flex;
+    align-items: center;
+    min-width: 0;
+    flex: 1;
+  }
+
+  .mobile-menu-brand img {
+    display: block;
+    width: 155px;
+    height: 52px;
+    max-width: 100%;
+    object-fit: contain;
+    object-position: left center;
+  }
+
+  .mobile-menu-close {
+    display: grid;
+    place-items: center;
+    flex: 0 0 40px;
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    border: 0;
+    border-radius: 12px;
+    background: #f2eef8;
+    color: #4e475b;
+    font-size: 22px;
+    line-height: 1;
+    cursor: pointer;
+  }
+
+  .mobile-menu-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 16px 12px 24px;
+  }
+
+  .mobile-menu-item {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    width: 100%;
+    min-height: 52px;
+    padding: 10px 14px;
+    box-sizing: border-box;
+    border: 0;
+    border-radius: 14px;
+    background: transparent;
+    color: #42485c;
+    font-family: inherit;
+    font-size: 15px;
+    font-weight: 800;
+    text-align: left;
+    cursor: pointer;
+  }
+
+  .mobile-menu-item > span {
+    width: 28px;
+    flex: 0 0 28px;
+    text-align: center;
+    font-size: 21px;
+  }
+
+  .mobile-menu-item:hover,
+  .mobile-menu-item.active {
+    background: #f1e8ff;
+    color: #6735c7;
+  }
+
+  /* El menú lateral de escritorio no debe aparecer en móvil */
+  .sidebar {
+    display: none !important;
+  }
+}
+
+@media (max-width: 380px) {
+  .mobile-top-logo {
+    left: 58px;
+    width: 105px;
+  }
+
+  .mobile-menu {
+    width: min(90vw, 330px);
+  }
+
+  .mobile-menu-brand img {
+    width: 145px;
+  }
+}

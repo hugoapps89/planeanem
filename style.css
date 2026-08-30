@@ -2999,312 +2999,222 @@
   }
 }
 
-/* =========================================================
-   PLAN CON IA — MENÚ MÓVIL
-   ÚNICO BLOQUE RESPONSIVO
-   ========================================================= */
 
-/* Por defecto, todo lo exclusivo del móvil está oculto. */
-.mobile-menu-btn,
-.mobile-top-logo,
-.mobile-menu,
-.mobile-menu-overlay {
-  display: none !important;
-}
-
-/* =========================================================
-   ESCRITORIO
-   ========================================================= */
+/* ===== CORRECCIÓN DEFINITIVA MENÚ MÓVIL / ESCRITORIO ===== */
 @media screen and (min-width: 801px) {
-  .mobile-menu-btn,
-  .mobile-top-logo,
-  .mobile-menu,
-  .mobile-menu-overlay {
+  html body .topbar .mobile-menu-btn,
+  html body .mobile-menu-btn {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    width: 0 !important;
+    height: 0 !important;
+    min-width: 0 !important;
+    min-height: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    position: absolute !important;
+    pointer-events: none !important;
+  }
+
+  html body .mobile-top-logo {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    width: 0 !important;
+    height: 0 !important;
+    position: absolute !important;
+    pointer-events: none !important;
+  }
+
+  html body .mobile-menu-overlay,
+  html body #mobileMenuOverlay {
     display: none !important;
     visibility: hidden !important;
     opacity: 0 !important;
     pointer-events: none !important;
   }
+
+  html body .mobile-menu,
+  html body #mobileMenu {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    transform: none !important;
+    pointer-events: none !important;
+  }
+}
+
+@media screen and (max-width: 800px) {
+  html body .mobile-menu-btn {
+    display: grid !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+  }
+
+  html body .mobile-menu,
+  html body .mobile-menu-overlay {
+    /* La visibilidad real del panel la controla app.js mediante la clase de apertura. */
+    box-sizing: border-box;
+  }
 }
 
 /* =========================================================
-   CELULAR / TABLET PEQUEÑA
+   PLAN CON IA — CORRECCIÓN FINAL DE ENCABEZADO EN CELULAR
+   1) Logo y Maestra Luna separados
+   2) Iconos decorativos no cubren descripciones
    ========================================================= */
+
 @media screen and (max-width: 800px) {
 
-  .mobile-menu-btn {
-    display: grid !important;
-    place-items: center !important;
-    position: absolute !important;
-    left: 14px !important;
-    top: 50% !important;
-    transform: translateY(-50%) !important;
-    width: 44px !important;
-    height: 44px !important;
-    padding: 0 !important;
-    border: 0 !important;
-    border-radius: 14px !important;
-    background: #eee4ff !important;
-    color: #6638bd !important;
-    font-size: 25px !important;
-    line-height: 1 !important;
-    font-weight: 900 !important;
-    z-index: 1200 !important;
-    cursor: pointer !important;
-  }
-
-  .mobile-top-logo {
-    display: block !important;
-    position: absolute !important;
-    left: 66px !important;
-    top: 50% !important;
-    transform: translateY(-50%) !important;
-    width: 112px !important;
-    height: 48px !important;
-    max-width: 112px !important;
-    object-fit: contain !important;
-    object-position: left center !important;
-    z-index: 25 !important;
-  }
-
-  .mobile-menu-overlay {
-    display: block !important;
-    position: fixed !important;
-    inset: 0 !important;
-    background: rgba(48, 31, 75, .38) !important;
-    z-index: 998 !important;
-    opacity: 0 !important;
-    visibility: hidden !important;
-    pointer-events: none !important;
-    transition: opacity .22s ease, visibility 0s linear .22s !important;
-  }
-
-  .mobile-menu {
-    display: flex !important;
-    position: fixed !important;
-    top: 0 !important;
-    left: 0 !important;
-    width: min(92vw, 390px) !important;
-    height: 100vh !important;
-    height: 100dvh !important;
-    margin: 0 !important;
-    padding: 0 !important;
-    box-sizing: border-box !important;
-    flex-direction: column !important;
-    background: linear-gradient(180deg,#fff 0%,#fbf8ff 100%) !important;
-    border-radius: 0 26px 26px 0 !important;
-    z-index: 999 !important;
-    transform: translate3d(-110%,0,0) !important;
-    visibility: hidden !important;
-    opacity: 0 !important;
-    pointer-events: none !important;
-    overflow-x: hidden !important;
-    overflow-y: auto !important;
-    box-shadow: 8px 0 30px rgba(40,20,70,.18) !important;
-    transition: transform .28s ease, opacity .2s ease, visibility 0s linear .28s !important;
-  }
-
-  body.mobile-menu-open .mobile-menu {
-    transform: translate3d(0,0,0) !important;
-    visibility: visible !important;
-    opacity: 1 !important;
-    pointer-events: auto !important;
-    transition: transform .28s ease, opacity .2s ease, visibility 0s linear 0s !important;
-  }
-
-  body.mobile-menu-open .mobile-menu-overlay {
-    opacity: 1 !important;
-    visibility: visible !important;
-    pointer-events: auto !important;
-    transition: opacity .22s ease, visibility 0s linear 0s !important;
-  }
-
-  body.mobile-menu-open {
-    overflow: hidden !important;
-  }
-
-  .mobile-menu-header {
-    min-height: 104px !important;
-    padding: 14px 16px 12px 20px !important;
-    box-sizing: border-box !important;
+  /* El encabezado móvil usa tres zonas: menú / logo / perfil */
+  .topbar {
+    height: 82px !important;
+    min-height: 82px !important;
+    padding: 0 10px 0 12px !important;
     display: flex !important;
     align-items: center !important;
     justify-content: space-between !important;
-    flex-shrink: 0 !important;
-    background: radial-gradient(circle at 90% 15%,rgba(255,214,70,.55) 0 22px,transparent 23px),
-                linear-gradient(135deg,#e8dcff 0%,#fff1f7 48%,#fff8d9 100%) !important;
-    border-bottom: 1px solid #e7d8ff !important;
+    gap: 8px !important;
+    position: sticky !important;
+    overflow: visible !important;
   }
 
-  .mobile-menu-brand {
-    display: flex !important;
-    align-items: center !important;
-    min-width: 0 !important;
-    flex: 1 !important;
+  .mobile-menu-btn {
+    position: relative !important;
+    left: auto !important;
+    top: auto !important;
+    transform: none !important;
+    flex: 0 0 44px !important;
+    width: 44px !important;
+    height: 44px !important;
+    z-index: 30 !important;
   }
 
-  .mobile-menu-brand img {
-    display: block !important;
-    width: 190px !important;
-    height: 70px !important;
-    max-width: 100% !important;
+  .mobile-top-logo {
+    position: relative !important;
+    left: auto !important;
+    top: auto !important;
+    transform: none !important;
+    flex: 1 1 auto !important;
+    width: auto !important;
+    max-width: 140px !important;
+    height: 62px !important;
+    margin: 0 auto 0 2px !important;
     object-fit: contain !important;
     object-position: left center !important;
-    filter: drop-shadow(0 4px 5px rgba(91,53,160,.12)) !important;
   }
 
-  .mobile-menu-close {
-    display: grid !important;
-    place-items: center !important;
-    flex: 0 0 46px !important;
-    width: 46px !important;
-    height: 46px !important;
-    padding: 0 !important;
-    border: 2px solid #e3d2ff !important;
-    border-radius: 15px !important;
-    background: rgba(255,255,255,.86) !important;
-    color: #6336bd !important;
-    font-size: 25px !important;
-    line-height: 1 !important;
-    box-shadow: 0 5px 14px rgba(87,50,145,.12) !important;
-    cursor: pointer !important;
-  }
-
-  .mobile-menu-nav {
-    display: flex !important;
-    flex-direction: column !important;
-    gap: 10px !important;
-    padding: 18px 14px 28px !important;
-  }
-
-  .mobile-menu-item {
-    position: relative !important;
+  .top-icons {
     display: flex !important;
     align-items: center !important;
-    gap: 13px !important;
-    width: 100% !important;
-    min-height: 76px !important;
-    padding: 10px 50px 10px 14px !important;
-    box-sizing: border-box !important;
-    border: 2px solid transparent !important;
-    border-radius: 20px !important;
-    font-family: inherit !important;
-    font-size: 17px !important;
-    font-weight: 900 !important;
-    text-align: left !important;
-    color: #3f465b !important;
-    box-shadow: 0 5px 14px rgba(54,48,85,.06) !important;
+    justify-content: flex-end !important;
+    flex: 0 0 auto !important;
+    min-width: 0 !important;
+    margin-left: auto !important;
+  }
+
+  /* En móvil quitamos la campana para darle espacio real al perfil */
+  .top-icons .bell {
+    display: none !important;
+  }
+
+  .top-icons .profile {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 4px !important;
+    min-width: 0 !important;
+    width: auto !important;
+    max-width: 150px !important;
+    padding: 7px 9px !important;
+    font-size: 12px !important;
+    line-height: 1.1 !important;
+    border-radius: 22px !important;
+    white-space: nowrap !important;
     overflow: hidden !important;
-    cursor: pointer !important;
   }
 
-  .mobile-menu-item::after {
-    content: '›' !important;
-    position: absolute !important;
-    right: 15px !important;
-    top: 50% !important;
-    transform: translateY(-50%) !important;
-    width: 34px !important;
-    height: 34px !important;
-    display: grid !important;
-    place-items: center !important;
-    border-radius: 50% !important;
-    color: #fff !important;
-    font-size: 27px !important;
-    line-height: 1 !important;
-    font-weight: 400 !important;
-  }
-
-  .mobile-menu-item > span {
-    width: 54px !important;
-    flex: 0 0 54px !important;
-    height: 54px !important;
-    display: grid !important;
-    place-items: center !important;
-    border-radius: 17px !important;
-    background: rgba(255,255,255,.72) !important;
-    font-size: 30px !important;
-    box-shadow: inset 0 0 0 1px rgba(255,255,255,.8) !important;
-  }
-
-  .mobile-menu-item:nth-child(1) {
-    background: linear-gradient(105deg,#f0e5ff,#faf5ff) !important;
-    border-color: #d8bdff !important;
-    color: #6434bf !important;
-  }
-  .mobile-menu-item:nth-child(1)::after { background:#7c45dc !important; }
-
-  .mobile-menu-item:nth-child(2) {
-    background: linear-gradient(105deg,#fff3c9,#fffaf0) !important;
-    border-color: #ffd879 !important;
-    color: #e7770b !important;
-  }
-  .mobile-menu-item:nth-child(2)::after { background:#f39a19 !important; }
-
-  .mobile-menu-item:nth-child(3) {
-    background: linear-gradient(105deg,#e3f1ff,#f5faff) !important;
-    border-color: #b8d8ff !important;
-    color: #2766c7 !important;
-  }
-  .mobile-menu-item:nth-child(3)::after { background:#4285e8 !important; }
-
-  .mobile-menu-item:nth-child(4) {
-    background: linear-gradient(105deg,#e8f9dc,#f7fff2) !important;
-    border-color: #bfe89d !important;
-    color: #42a62f !important;
-  }
-  .mobile-menu-item:nth-child(4)::after { background:#4dbd35 !important; }
-
-  .mobile-menu-item:nth-child(5) {
-    background: linear-gradient(105deg,#ffe5f0,#fff5fa) !important;
-    border-color: #f5bdd5 !important;
-    color: #d72c7e !important;
-  }
-  .mobile-menu-item:nth-child(5)::after { background:#ed4b91 !important; }
-
-  .mobile-menu-item:nth-child(6) {
-    background: linear-gradient(105deg,#e1f8fa,#f4ffff) !important;
-    border-color: #a8dfe4 !important;
-    color: #1297a1 !important;
-  }
-  .mobile-menu-item:nth-child(6)::after { background:#18aeb8 !important; }
-
-  .mobile-menu-item:active {
-    transform: scale(.97) !important;
-  }
-
-  .mobile-menu-nav::after {
-    content: '🌈  ✏️  📚  ⭐  🍎' !important;
-    display: block !important;
-    margin: 8px 8px 0 !important;
-    padding: 14px 10px !important;
-    border-radius: 18px !important;
-    text-align: center !important;
+  .top-icons .profile .avatar {
+    flex: 0 0 auto !important;
     font-size: 20px !important;
-    letter-spacing: 3px !important;
-    background: linear-gradient(105deg,#fff4fb,#eef8ff,#fffbea) !important;
-    border: 1px dashed #d9c7ee !important;
+  }
+
+  .top-icons .profile .chev {
+    flex: 0 0 auto !important;
+  }
+
+  /* En Nueva planeación los dibujos son decorativos:
+     en celular no deben tapar el texto descriptivo. */
+  #nueva > .page-head {
+    padding: 20px 18px 18px !important;
+    min-height: 0 !important;
+    overflow: hidden !important;
+  }
+
+  #nueva > .page-head:after {
+    display: none !important;
+    content: none !important;
+  }
+
+  #nueva > .page-head h1 {
+    max-width: none !important;
+    margin-right: 0 !important;
+    font-size: 25px !important;
+    line-height: 1.18 !important;
+  }
+
+  #nueva > .page-head p {
+    max-width: none !important;
+    margin-right: 0 !important;
+    font-size: 14px !important;
+    line-height: 1.45 !important;
+  }
+
+  /* Los encabezados de otras vistas tampoco permitirán
+     que sus decoraciones cubran texto en pantallas pequeñas. */
+  .view > .page-head:after {
+    display: none !important;
+    content: none !important;
+  }
+
+  /* Evita que pseudo-elementos decorativos de tarjetas
+     interfieran con textos en móvil. */
+  .welcome:after {
+    right: 12px !important;
+    bottom: 10px !important;
+    font-size: 18px !important;
+    opacity: .72 !important;
   }
 }
 
-@media screen and (max-width:380px) {
-  .mobile-menu {
-    width: 94vw !important;
+@media screen and (max-width: 380px) {
+  .topbar {
+    padding-left: 10px !important;
+    padding-right: 8px !important;
+    gap: 5px !important;
   }
 
-  .mobile-menu-brand img {
-    width: 170px !important;
+  .mobile-menu-btn {
+    flex-basis: 42px !important;
+    width: 42px !important;
+    height: 42px !important;
   }
 
-  .mobile-menu-item {
-    min-height: 68px !important;
-    font-size: 16px !important;
+  .mobile-top-logo {
+    max-width: 116px !important;
+    height: 56px !important;
+    margin-left: 0 !important;
   }
 
-  .mobile-menu-item > span {
-    width: 48px !important;
-    flex-basis: 48px !important;
-    height: 48px !important;
-    font-size: 27px !important;
+  .top-icons .profile {
+    max-width: 139px !important;
+    padding-left: 7px !important;
+    padding-right: 7px !important;
+    font-size: 11px !important;
+  }
+
+  .top-icons .profile .avatar {
+    font-size: 18px !important;
   }
 }

@@ -3060,61 +3060,69 @@
 }
 
 /* =========================================================
-   PLAN CON IA — CORRECCIÓN FINAL DE ENCABEZADO EN CELULAR
-   1) Logo y Maestra Luna separados
-   2) Iconos decorativos no cubren descripciones
+   PLAN CON IA — CORRECCIÓN CELULAR V3
+   Encabezado sin superposición + encabezados sin emojis
    ========================================================= */
 
 @media screen and (max-width: 800px) {
 
-  /* El encabezado móvil usa tres zonas: menú / logo / perfil */
+  /* ---------- ENCABEZADO SUPERIOR ---------- */
   .topbar {
     height: 82px !important;
     min-height: 82px !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
     padding: 0 10px 0 12px !important;
-    display: flex !important;
+    display: grid !important;
+    grid-template-columns: 44px minmax(90px, 1fr) auto !important;
     align-items: center !important;
-    justify-content: space-between !important;
-    gap: 8px !important;
-    position: sticky !important;
+    column-gap: 8px !important;
+    position: relative !important;
     overflow: visible !important;
   }
 
   .mobile-menu-btn {
-    position: relative !important;
-    left: auto !important;
-    top: auto !important;
-    transform: none !important;
-    flex: 0 0 44px !important;
+    position: static !important;
+    grid-column: 1 !important;
+    grid-row: 1 !important;
     width: 44px !important;
     height: 44px !important;
-    z-index: 30 !important;
+    min-width: 44px !important;
+    min-height: 44px !important;
+    transform: none !important;
+    margin: 0 !important;
+    z-index: 20 !important;
   }
 
   .mobile-top-logo {
-    position: relative !important;
-    left: auto !important;
-    top: auto !important;
+    position: static !important;
+    grid-column: 2 !important;
+    grid-row: 1 !important;
+    display: block !important;
+    width: 100% !important;
+    max-width: 125px !important;
+    height: 58px !important;
+    min-width: 0 !important;
+    margin: 0 !important;
     transform: none !important;
-    flex: 1 1 auto !important;
-    width: auto !important;
-    max-width: 140px !important;
-    height: 62px !important;
-    margin: 0 auto 0 2px !important;
     object-fit: contain !important;
     object-position: left center !important;
+    justify-self: start !important;
+    z-index: 10 !important;
   }
 
   .top-icons {
+    grid-column: 3 !important;
+    grid-row: 1 !important;
     display: flex !important;
     align-items: center !important;
     justify-content: flex-end !important;
-    flex: 0 0 auto !important;
     min-width: 0 !important;
-    margin-left: auto !important;
+    margin: 0 !important;
+    z-index: 20 !important;
   }
 
-  /* En móvil quitamos la campana para darle espacio real al perfil */
+  /* La campana no cabe cómodamente junto al perfil en celular. */
   .top-icons .bell {
     display: none !important;
   }
@@ -3124,93 +3132,107 @@
     align-items: center !important;
     justify-content: center !important;
     gap: 4px !important;
-    min-width: 0 !important;
     width: auto !important;
-    max-width: 150px !important;
-    padding: 7px 9px !important;
+    min-width: 0 !important;
+    max-width: 142px !important;
+    padding: 7px 8px !important;
+    margin: 0 !important;
+    box-sizing: border-box !important;
     font-size: 12px !important;
-    line-height: 1.1 !important;
-    border-radius: 22px !important;
+    line-height: 1.15 !important;
     white-space: nowrap !important;
     overflow: hidden !important;
+    text-overflow: ellipsis !important;
   }
 
   .top-icons .profile .avatar {
     flex: 0 0 auto !important;
-    font-size: 20px !important;
+    font-size: 19px !important;
   }
 
   .top-icons .profile .chev {
     flex: 0 0 auto !important;
   }
 
-  /* En Nueva planeación los dibujos son decorativos:
-     en celular no deben tapar el texto descriptivo. */
-  #nueva > .page-head {
-    padding: 20px 18px 18px !important;
+  /* ---------- ENCABEZADOS DE LAS VISTAS ---------- */
+  /*
+     Los emojis de estos encabezados son decorativos.
+     En móvil se eliminan para que nunca cubran la descripción.
+  */
+  #nueva > .page-head:after,
+  #mis > .page-head:after,
+  #favoritos > .page-head:after,
+  #perfil > .page-head:after,
+  #config > .page-head:after {
+    display: none !important;
+    content: none !important;
+  }
+
+  #nueva > .page-head,
+  #mis > .page-head,
+  #favoritos > .page-head,
+  #perfil > .page-head,
+  #config > .page-head {
+    padding: 20px 18px !important;
     min-height: 0 !important;
     overflow: hidden !important;
   }
 
-  #nueva > .page-head:after {
-    display: none !important;
-    content: none !important;
-  }
-
-  #nueva > .page-head h1 {
+  #nueva > .page-head h1,
+  #mis > .page-head h1,
+  #favoritos > .page-head h1,
+  #perfil > .page-head h1,
+  #config > .page-head h1 {
     max-width: none !important;
     margin-right: 0 !important;
     font-size: 25px !important;
-    line-height: 1.18 !important;
+    line-height: 1.2 !important;
   }
 
-  #nueva > .page-head p {
+  #nueva > .page-head p,
+  #mis > .page-head p,
+  #favoritos > .page-head p,
+  #perfil > .page-head p,
+  #config > .page-head p {
     max-width: none !important;
     margin-right: 0 !important;
-    font-size: 14px !important;
+    font-size: 13px !important;
     line-height: 1.45 !important;
   }
 
-  /* Los encabezados de otras vistas tampoco permitirán
-     que sus decoraciones cubran texto en pantallas pequeñas. */
-  .view > .page-head:after {
-    display: none !important;
-    content: none !important;
-  }
-
-  /* Evita que pseudo-elementos decorativos de tarjetas
-     interfieran con textos en móvil. */
-  .welcome:after {
+  /* El encabezado de inicio también evita decoraciones sobre contenido. */
+  #inicio .welcome:after {
     right: 12px !important;
     bottom: 10px !important;
-    font-size: 18px !important;
-    opacity: .72 !important;
+    font-size: 17px !important;
+    opacity: .7 !important;
   }
 }
 
 @media screen and (max-width: 380px) {
   .topbar {
-    padding-left: 10px !important;
-    padding-right: 8px !important;
-    gap: 5px !important;
+    grid-template-columns: 42px minmax(82px, 1fr) auto !important;
+    column-gap: 5px !important;
+    padding-left: 9px !important;
+    padding-right: 7px !important;
   }
 
   .mobile-menu-btn {
-    flex-basis: 42px !important;
     width: 42px !important;
     height: 42px !important;
+    min-width: 42px !important;
+    min-height: 42px !important;
   }
 
   .mobile-top-logo {
-    max-width: 116px !important;
-    height: 56px !important;
-    margin-left: 0 !important;
+    max-width: 112px !important;
+    height: 54px !important;
   }
 
   .top-icons .profile {
-    max-width: 139px !important;
-    padding-left: 7px !important;
-    padding-right: 7px !important;
+    max-width: 133px !important;
+    padding-left: 6px !important;
+    padding-right: 6px !important;
     font-size: 11px !important;
   }
 

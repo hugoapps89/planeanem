@@ -3448,59 +3448,52 @@
 }
 
 /* =========================================================
-   PLAN CON IA — ESCRITORIO: ENCABEZADO E INSPIRACIÓN
+   PLAN CON IA — INSPIRACIÓN ESCRITORIO V2
+   Evita que los iconos se salgan de la tarjeta.
    ========================================================= */
-
-/* El icono de notificaciones no se muestra en escritorio.
-   Se conserva para móvil, donde otras reglas lo gestionan. */
 @media screen and (min-width:801px){
-  .topbar .top-icons .bell{
-    display:none !important;
-  }
 
-  .topbar .top-icons{
-    display:flex !important;
+  #inicio .inspiration{
+    position:relative !important;
+    display:grid !important;
+    grid-template-columns:minmax(0,1fr) 260px !important;
     align-items:center !important;
-    justify-content:flex-end !important;
+    gap:24px !important;
+    box-sizing:border-box !important;
+    overflow:hidden !important;
   }
 
-  /* Inspiración: iconos alineados, separados y sin deformación. */
+  #inicio .inspiration > div:first-child{
+    min-width:0 !important;
+    max-width:100% !important;
+  }
+
   #inicio .inspire-art{
+    position:relative !important;
+    width:100% !important;
+    min-width:0 !important;
+    max-width:260px !important;
+    height:104px !important;
+    min-height:104px !important;
+    box-sizing:border-box !important;
     display:flex !important;
     align-items:center !important;
     justify-content:center !important;
-    gap:14px !important;
-    min-width:245px !important;
-    padding:10px 6px !important;
+    gap:18px !important;
+    padding:10px 14px !important;
+    margin:0 !important;
+    overflow:hidden !important;
+    border-radius:20px !important;
     font-family:"Segoe UI Emoji","Apple Color Emoji","Noto Color Emoji",sans-serif !important;
     font-size:34px !important;
     line-height:1 !important;
     letter-spacing:0 !important;
     white-space:nowrap !important;
-    transform:none !important;
   }
 
-  #inicio .inspiration{
-    align-items:center !important;
-  }
-
-  #inicio .inspiration > div:first-child{
-    min-width:0 !important;
-    flex:1 1 auto !important;
-  }
-}
-
-/* En pantallas pequeñas mantenemos la inspiración compacta. */
-@media screen and (max-width:800px){
-  #inicio .inspire-art{
-    display:flex !important;
-    align-items:center !important;
-    justify-content:center !important;
-    gap:8px !important;
-    font-family:"Segoe UI Emoji","Apple Color Emoji","Noto Color Emoji",sans-serif !important;
-    font-size:25px !important;
-    line-height:1 !important;
-    letter-spacing:0 !important;
-    white-space:nowrap !important;
+  #inicio .inspire-art::before,
+  #inicio .inspire-art::after{
+    content:none !important;
+    display:none !important;
   }
 }

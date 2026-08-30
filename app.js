@@ -817,62 +817,86 @@ const fieldIcon =
   });
 
   /* =========================================================
-     FAVORITOS — GUARDADO Y SINCRONIZACIÓN
+     FAVORITOS — GUARDADO ROBUSTO
+     Un solo listener delegado para evitar que el botón pierda
+     el evento cuando Mis planeaciones se vuelve a renderizar.
      ========================================================= */
-  const favoriteButtons = list.querySelectorAll('.favorite-planning');
+  setupFavoriteDelegation();
 
-  favoriteButtons.forEach(button => {
-    button.addEventListener('click', function(e) {
-      e.preventDefault();
-      e.stopPropagation();
 
-      const id = String(this.dataset.id);
 
-      let saved = [];
-      try {
-        saved = JSON.parse(
-          localStorage.getItem('planeanem_planeaciones') || '[]'
-        );
-        if(!Array.isArray(saved)) saved = [];
-      } catch(error) {
-        console.error('No se pudieron leer las planeaciones:', error);
-        return;
-      }
 
-      const planning = saved.find(
-        item => String(item.id) === id
+function setupFavoriteDelegation(){
+  if(window.__planeanemFavoriteDelegation) return;
+  window.__planeanemFavoriteDelegation = true;
+
+  document.addEventListener('click', function(e){
+    const button = e.target.closest('.favorite-planning');
+    if(!button) return;
+
+    e.preventDefault();
+    e.stopPropagation();
+
+    const id = String(button.dataset.id || '').trim();
+    if(!id) return;
+
+    let saved;
+    try{
+      saved = JSON.parse(
+        localStorage.getItem('planeanem_planeaciones') || '[]'
+      );
+      if(!Array.isArray(saved)) saved = [];
+    }catch(error){
+      console.error('No se pudieron leer las planeaciones:', error);
+      return;
+    }
+
+    const planning = saved.find(item =>
+      String(item.id ?? '').trim() === id
+    );
+
+    if(!planning){
+      console.error('No se encontró la planeación con ID:', id);
+      return;
+    }
+
+    const isFavorite =
+      planning.favorite === true ||
+      planning.favorite === 'true' ||
+      planning.favorite === 1 ||
+      planning.favorite === '1';
+
+    planning.favorite = !isFavorite;
+
+    try{
+      localStorage.setItem(
+        'planeanem_planeaciones',
+        JSON.stringify(saved)
       );
 
-      if(!planning) {
-        console.error('No se encontró la planeación con ID:', id);
+      // Verificación inmediata: si no quedó escrito, no continuamos.
+      const verify = JSON.parse(
+        localStorage.getItem('planeanem_planeaciones') || '[]'
+      );
+      const savedPlanning = verify.find(item =>
+        String(item.id ?? '').trim() === id
+      );
+
+      if(!savedPlanning ||
+         savedPlanning.favorite !== planning.favorite){
+        console.error('El favorito no pudo verificarse en localStorage.');
         return;
       }
+    }catch(error){
+      console.error('No se pudo guardar el favorito:', error);
+      return;
+    }
 
-      // Acepta tanto booleanos como valores antiguos guardados como texto.
-      const isFavorite =
-        planning.favorite === true ||
-        planning.favorite === 'true' ||
-        planning.favorite === 1 ||
-        planning.favorite === '1';
-
-      planning.favorite = !isFavorite;
-
-      try {
-        localStorage.setItem(
-          'planeanem_planeaciones',
-          JSON.stringify(saved)
-        );
-      } catch(error) {
-        console.error('No se pudo guardar el favorito:', error);
-        return;
-      }
-
-      // Actualizar todas las vistas que dependen del mismo almacenamiento.
-      updateHomeStats();
-      renderSavedPlannings();
-      renderFavoritePlannings();
-    });
+    updateHomeStats();
+    renderSavedPlannings();
+    renderFavoritePlannings();
   });
+}
 
 }
 

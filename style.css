@@ -3240,3 +3240,209 @@
     font-size: 18px !important;
   }
 }
+
+/* =========================================================
+   PLAN CON IA — FIX CELULAR V4
+   Encabezado: menú | logo | Maestra Luna
+   Encabezados: sin elementos decorativos que cubran texto
+   ========================================================= */
+
+@media screen and (max-width: 800px) {
+
+  /* No generar "PlaneaNEM" artificialmente sobre el encabezado. */
+  .topbar::before,
+  .topbar::after {
+    content: none !important;
+    display: none !important;
+  }
+
+  .topbar {
+    position: sticky !important;
+    top: 0 !important;
+    z-index: 100 !important;
+    width: 100% !important;
+    height: 74px !important;
+    min-height: 74px !important;
+    box-sizing: border-box !important;
+    padding: 0 10px !important;
+    display: grid !important;
+    grid-template-columns: 44px minmax(0,1fr) minmax(0,145px) !important;
+    align-items: center !important;
+    gap: 7px !important;
+    justify-content: initial !important;
+    overflow: visible !important;
+  }
+
+  .mobile-menu-btn {
+    display: grid !important;
+    position: static !important;
+    grid-column: 1 !important;
+    grid-row: 1 !important;
+    width: 44px !important;
+    height: 44px !important;
+    min-width: 44px !important;
+    min-height: 44px !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    transform: none !important;
+    z-index: 101 !important;
+  }
+
+  .mobile-top-logo {
+    display: block !important;
+    position: static !important;
+    grid-column: 2 !important;
+    grid-row: 1 !important;
+    width: 100% !important;
+    max-width: 125px !important;
+    height: 58px !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    transform: none !important;
+    justify-self: start !important;
+    object-fit: contain !important;
+    object-position: left center !important;
+  }
+
+  .top-icons {
+    display: flex !important;
+    grid-column: 3 !important;
+    grid-row: 1 !important;
+    align-items: center !important;
+    justify-content: flex-end !important;
+    min-width: 0 !important;
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  .top-icons .bell {
+    display: none !important;
+  }
+
+  .top-icons .profile {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    box-sizing: border-box !important;
+    width: 100% !important;
+    max-width: 145px !important;
+    min-width: 0 !important;
+    margin: 0 !important;
+    padding: 6px 7px !important;
+    gap: 3px !important;
+    font-size: 11px !important;
+    line-height: 1.1 !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+  }
+
+  .top-icons .profile .avatar {
+    flex: 0 0 auto !important;
+    font-size: 19px !important;
+  }
+
+  .top-icons .profile .chev {
+    flex: 0 0 auto !important;
+  }
+
+  /* Los page-head no tendrán pseudo-elementos decorativos flotantes. */
+  .view .page-head::before,
+  .view .page-head::after,
+  #nueva .page-head::before,
+  #nueva .page-head::after,
+  #mis .page-head::before,
+  #mis .page-head::after,
+  #favoritos .page-head::before,
+  #favoritos .page-head::after,
+  #perfil .page-head::before,
+  #perfil .page-head::after,
+  #config .page-head::before,
+  #config .page-head::after {
+    content: none !important;
+    display: none !important;
+  }
+
+  .view .page-head {
+    position: relative !important;
+    overflow: hidden !important;
+    min-height: 0 !important;
+    padding: 18px !important;
+  }
+
+  .view .page-head h1 {
+    position: relative !important;
+    z-index: 2 !important;
+    max-width: 100% !important;
+    margin: 5px 0 7px !important;
+    padding: 0 !important;
+    font-size: 24px !important;
+    line-height: 1.22 !important;
+  }
+
+  .view .page-head p {
+    position: relative !important;
+    z-index: 2 !important;
+    display: block !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    font-size: 13px !important;
+    line-height: 1.5 !important;
+  }
+
+  /* Evita que un icono decorativo del contenido se coloque sobre el texto. */
+  #nueva .page-head span {
+    position: relative !important;
+    z-index: 2 !important;
+  }
+}
+
+@media screen and (max-width: 430px) {
+  .topbar {
+    grid-template-columns: 43px minmax(0,1fr) minmax(0,132px) !important;
+    gap: 5px !important;
+    padding: 0 8px !important;
+  }
+
+  .mobile-menu-btn {
+    width: 43px !important;
+    height: 43px !important;
+    min-width: 43px !important;
+  }
+
+  .mobile-top-logo {
+    max-width: 112px !important;
+    height: 55px !important;
+  }
+
+  .top-icons .profile {
+    max-width: 132px !important;
+    font-size: 10.5px !important;
+  }
+}
+
+@media screen and (max-width: 360px) {
+  .topbar {
+    grid-template-columns: 40px minmax(0,1fr) minmax(0,120px) !important;
+    gap: 4px !important;
+  }
+
+  .mobile-menu-btn {
+    width: 40px !important;
+    height: 40px !important;
+    min-width: 40px !important;
+  }
+
+  .mobile-top-logo {
+    max-width: 100px !important;
+  }
+
+  .top-icons .profile {
+    max-width: 120px !important;
+    font-size: 10px !important;
+    padding-left: 5px !important;
+    padding-right: 5px !important;
+  }
+}

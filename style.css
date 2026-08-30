@@ -2998,3 +2998,63 @@
     width: 145px;
   }
 }
+
+
+/* ===== CORRECCIÓN DEFINITIVA MENÚ MÓVIL / ESCRITORIO ===== */
+@media screen and (min-width: 801px) {
+  html body .topbar .mobile-menu-btn,
+  html body .mobile-menu-btn {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    width: 0 !important;
+    height: 0 !important;
+    min-width: 0 !important;
+    min-height: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    position: absolute !important;
+    pointer-events: none !important;
+  }
+
+  html body .mobile-top-logo {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    width: 0 !important;
+    height: 0 !important;
+    position: absolute !important;
+    pointer-events: none !important;
+  }
+
+  html body .mobile-menu-overlay,
+  html body #mobileMenuOverlay {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+  }
+
+  html body .mobile-menu,
+  html body #mobileMenu {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    transform: none !important;
+    pointer-events: none !important;
+  }
+}
+
+@media screen and (max-width: 800px) {
+  html body .mobile-menu-btn {
+    display: grid !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+  }
+
+  html body .mobile-menu,
+  html body .mobile-menu-overlay {
+    /* La visibilidad real del panel la controla app.js mediante la clase de apertura. */
+    box-sizing: border-box;
+  }
+}

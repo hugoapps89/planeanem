@@ -32,6 +32,10 @@ const context=document.getElementById('context');
 
   show(view);
 
+  if(view === 'inicio'){
+    updateHomeStats();
+renderHomeRecentPlannings();
+  }
   if(view === 'mis'){
     renderSavedPlannings();
   }
@@ -211,8 +215,7 @@ document.querySelectorAll('.wizard-prev').forEach(b=>{
     }
   });
 });
-// "Sin BAP identificadas" es excluyente de las demás opciones.
-  const bapInputs = [...document.querySelectorAll('input[name="bap"]')];
+const bapInputs = [...document.querySelectorAll('input[name="bap"]')];
   const noBap = bapInputs.find(input =>
     input.value === 'No se identifican barreras para el aprendizaje y la comunicación'
   );
@@ -248,7 +251,6 @@ function getSelectedBap(){
     .map(input => input.value.trim())
     .filter(Boolean);
 }
-
 function getBapOther(){
   return document.getElementById('bapOther')?.value.trim() || '';
 }
@@ -280,7 +282,6 @@ function collectPlanningData(){
     pdas: getSelectedPdas(),
 
     context: document.getElementById('context')?.value.trim() || '',
-
     bap: getSelectedBap(),
     bapOther: getBapOther()
   };
@@ -457,6 +458,163 @@ function updateMisStats(saved){
   if(values[1]) values[1].textContent = complete;
   if(values[2]) values[2].textContent = editing;
   if(values[3]) values[3].textContent = favorites;
+}
+
+/* =========================================================
+   INICIO — ESTADÍSTICAS CONECTADAS A LAS PLANEACIONES REALES
+   ========================================================= */
+function updateHomeStats(){
+  const totalEl = document.getElementById('homeStatTotal');
+  const favEl = document.getElementById('homeStatFavorites');
+  const lastEl = document.getElementById('homeStatLast');
+  const planEl = document.getElementById('homeStatPlan');
+
+  if(!totalEl && !favEl && !lastEl && !planEl) return;
+
+  let saved = [];
+  try{
+    saved = JSON.parse(
+      localStorage.getItem('planeanem_planeaciones') || '[]'
+    );
+    if(!Array.isArray(saved)) saved = [];
+  }catch(error){
+    console.error('Error leyendo estadísticas de inicio:', error);
+    saved = [];
+  }
+
+  const total = saved.length;
+  const favorites = saved.filter(item => item.favorite === true).length;
+
+  if(totalEl) totalEl.textContent = total;
+  if(favEl) favEl.textContent = favorites;
+
+  if(lastEl){
+    if(!saved.length){
+      lastEl.textContent = 'Sin planeaciones';
+      lastEl.title = '';
+    }else{
+      const latest = [...saved].sort((a,b)=>{
+        const da = new Date(a.updatedAt || a.createdAt || 0).getTime();
+        const db = new Date(b.updatedAt || b.createdAt || 0).getTime();
+        return db - da;
+      })[0];
+
+      const raw = latest.updatedAt || latest.createdAt;
+      const date = new Date(raw);
+
+      if(!Number.isNaN(date.getTime())){
+        lastEl.textContent = date.toLocaleDateString('es-MX',{
+          day:'numeric',
+          month:'short',
+          year:'numeric'
+        }).replace(/\.$/,'');
+        lastEl.title = date.toLocaleString('es-MX');
+      }else{
+        lastEl.textContent = 'Sin fecha';
+        lastEl.title = '';
+      }
+    }
+  }
+
+  /*
+    El sistema de suscripciones todavía no está conectado a cuentas.
+    Si posteriormente existe una clave de plan, la tarjeta la toma;
+    de lo contrario conserva GRATUITO.
+  */
+  if(planEl){
+    const possiblePlanKeys = [
+      'planeanem_plan',
+      'planActual',
+      'subscriptionPlan',
+      'planeanem_subscription'
+    ];
+
+    let plan = null;
+    for(const key of possiblePlanKeys){
+      const value = localStorage.getItem(key);
+      if(value){
+        plan = value;
+        break;
+      }
+    }
+
+    if(typeof plan === 'string'){
+      try{
+        const parsed = JSON.parse(plan);
+        if(parsed && typeof parsed === 'object'){
+          plan = parsed.name || parsed.plan || parsed.type || plan;
+        }
+      }catch(_){}
+    }
+
+    planEl.textContent = String(plan || 'GRATUITO').toUpperCase();
+  }
+}
+
+function renderHomeRecentPlannings(){
+  const container=document.querySelector('#inicio .recent-card');
+  if(!container)return;
+
+  let saved=[];
+  try{saved=JSON.parse(localStorage.getItem('planeanem_planeaciones')||'[]');}
+  catch(error){console.error('Error leyendo planeaciones recientes:',error);}
+
+  const esc=value=>String(value??'')
+    .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+    .replace(/"/g,'&quot;').replace(/'/g,'&#039;');
+
+  const fieldIcon=field=>{
+    const f=String(field||'');
+    if(f.includes('Lenguajes'))return '📖';
+    if(f.includes('Saberes y Pensamiento'))return '🔬';
+    if(f.includes('Naturaleza y Sociedades'))return '🌿';
+    if(f.includes('Humano y lo Comunitario'))return '❤️';
+    return '📚';
+  };
+
+  const recent=[...saved].sort((a,b)=>{
+    const da=new Date(a.updatedAt||a.createdAt||0).getTime();
+    const db=new Date(b.updatedAt||b.createdAt||0).getTime();
+    return db-da;
+  }).slice(0,3);
+
+  let html=`<div class="recent-head"><h2>📚 Planeaciones recientes</h2><a href="#" id="homeRecentAll">Ver todas</a></div>`;
+
+  if(!recent.length){
+    html+=`<div class="home-recent-empty"><div class="home-recent-empty-icon">📚</div><strong>Aún no tienes planeaciones</strong><p>Crea tu primera planeación para verla aquí.</p></div>`;
+  }else{
+    html+=recent.map(planning=>{
+      const raw=planning.updatedAt||planning.createdAt;
+      let date='Sin fecha';
+      if(raw){const d=new Date(raw);if(!Number.isNaN(d.getTime()))date=d.toLocaleDateString('es-MX',{day:'numeric',month:'short',year:'numeric'});}
+      return `<article class="home-recent-item" data-id="${esc(planning.id)}" tabindex="0" role="button">
+        <span class="recent-icon">${fieldIcon(planning.field)}</span>
+        <div class="home-recent-main">
+          <b>${esc(planning.projectName||'Planeación sin nombre')}</b>
+          <p>${esc(planning.grade||'Grado no indicado')}${planning.field?' · '+esc(planning.field):''}</p>
+          <small>${esc(planning.phase||'Fase no indicada')} · ${esc(date)}</small>
+        </div>
+        <i class="home-recent-arrow">›</i>
+      </article>`;
+    }).join('');
+    html+=`<button type="button" class="all-btn" id="homeRecentAllBtn">📚 Ver todas mis planeaciones</button>`;
+  }
+
+  container.innerHTML=html;
+
+  const goAll=()=>document.querySelector('[data-view="mis"]')?.click();
+  container.querySelector('#homeRecentAll')?.addEventListener('click',e=>{e.preventDefault();goAll();});
+  container.querySelector('#homeRecentAllBtn')?.addEventListener('click',goAll);
+
+  container.querySelectorAll('.home-recent-item').forEach(item=>{
+    const open=()=>{
+      const id=Number(item.dataset.id);
+      if(typeof window.openSavedPlanning==='function')window.openSavedPlanning(id);
+      else{document.querySelector('[data-view="mis"]')?.click();}
+    };
+    item.addEventListener('click',open);
+    item.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();open();}});
+  });
 }
 
 function renderSavedPlannings(){
@@ -639,6 +797,7 @@ const fieldIcon =
         JSON.stringify(updated)
       );
 
+      updateHomeStats();
       renderSavedPlannings();
 
     });
@@ -704,6 +863,8 @@ const fieldIcon =
       'planeanem_planeaciones',
       JSON.stringify(saved)
     );
+
+    updateHomeStats();
 
     this.innerHTML = planning.favorite
       ? '⭐ En favoritos'
@@ -788,16 +949,13 @@ window.openSavedPlanning = function(id){
     context.value = planning.context || '';
   }
 
-// Barreras para el aprendizaje y la comunicación (BAP)
   const selectedBap = new Set(
     (planning.bap || []).map(bap => clean(bap))
   );
 
-  document
-    .querySelectorAll('input[name="bap"]')
-    .forEach(input => {
-      input.checked = selectedBap.has(clean(input.value));
-    });
+  document.querySelectorAll('input[name="bap"]').forEach(input => {
+    input.checked = selectedBap.has(clean(input.value));
+  });
 
   if(bapOther){
     bapOther.value = planning.bapOther || '';
@@ -894,6 +1052,9 @@ function handleSavePlanning(){
 
   renderPlanningReview(saved);
 
+  updateHomeStats();
+  renderHomeRecentPlannings();
+
   renderSavedPlannings();
 
   if(wasEditing){
@@ -906,11 +1067,14 @@ function handleSavePlanning(){
   ?.addEventListener('click', handleSavePlanning);  document.getElementById('gradeBtn')?.addEventListener('click',()=>{show('nueva');grade?.focus();});
   document.getElementById('fieldBtn')?.addEventListener('click',()=>{show('nueva');field?.focus();});
   const st=document.createElement('style');st.textContent='.pda-list,.pda-choice{box-sizing:border-box}.pda-choice{display:flex!important;align-items:flex-start;gap:11px;padding:13px!important;margin:0 0 8px!important;background:#fff!important;border:2px solid #e6e0f2!important;border-radius:12px!important;cursor:pointer!important;font-size:13px!important;line-height:1.45}.pda-choice input{width:18px!important;height:18px!important;margin:2px 0 0!important;flex:none;accent-color:#743bd0}.pda-number{font-weight:900;color:#7147c5;min-width:18px}.pda-text{flex:1}.pda-choice:has(input:checked){border-color:#b99be9!important;background:#f8f3ff!important}.pda-empty{padding:12px;border-radius:10px;background:#f7f5fa;color:#777}';document.head.appendChild(st);
-  refresh();show('inicio');
+  refresh();
+  renderHomeRecentPlannings();
+  show('inicio');
 }
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();
 })();
 function renderFavoritePlannings() {
+  updateHomeStats();
 
   const panel = document.querySelector('#favoritos .favorites-panel');
 
@@ -1124,3 +1288,43 @@ function renderFavoritePlannings() {
   });
 
 }
+/* ==========================================================
+   PLAN CON IA — CONTROL DEL MENÚ MÓVIL
+   ========================================================== */
+(function(){
+  function initMobileMenu(){
+    const btn=document.getElementById('mobileMenuBtn');
+    const menu=document.getElementById('mobileMenu');
+    const close=document.getElementById('mobileMenuClose');
+    const overlay=document.getElementById('mobileMenuOverlay');
+    if(!btn || !menu) return;
+
+    const closeMenu=()=>{
+      document.body.classList.remove('mobile-menu-open');
+      btn.setAttribute('aria-expanded','false');
+      menu.setAttribute('aria-hidden','true');
+      if(overlay) overlay.setAttribute('aria-hidden','true');
+    };
+    const openMenu=()=>{
+      if(window.innerWidth>800) return;
+      document.body.classList.add('mobile-menu-open');
+      btn.setAttribute('aria-expanded','true');
+      menu.setAttribute('aria-hidden','false');
+      if(overlay) overlay.setAttribute('aria-hidden','false');
+    };
+
+    btn.addEventListener('click',e=>{
+      e.preventDefault();
+      e.stopPropagation();
+      document.body.classList.contains('mobile-menu-open') ? closeMenu() : openMenu();
+    });
+    close?.addEventListener('click',e=>{e.preventDefault();closeMenu();});
+    overlay?.addEventListener('click',closeMenu);
+    menu.querySelectorAll('[data-view]').forEach(item=>item.addEventListener('click',closeMenu));
+    document.addEventListener('keydown',e=>{if(e.key==='Escape') closeMenu();});
+    window.addEventListener('resize',()=>{if(window.innerWidth>800) closeMenu();});
+    closeMenu();
+  }
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',initMobileMenu,{once:true});
+  else initMobileMenu();
+})();

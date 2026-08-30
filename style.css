@@ -3448,167 +3448,136 @@
 }
 
 /* =========================================================
-   PLAN CON IA — CELULAR V5
-   Última capa: encabezado y encabezados de vistas
+   PLAN CON IA — MENÚ MÓVIL IGUAL AL MENÚ DE ESCRITORIO V1
    ========================================================= */
 @media screen and (max-width:800px){
 
-  /* Nunca dibujar el nombre antiguo sobre el encabezado. */
-  header.topbar::before,
-  header.topbar::after{
-    content:none !important;
-    display:none !important;
+  /* Fondo exactamente basado en el sidebar de escritorio */
+  html body aside.mobile-menu{
+    background: linear-gradient(180deg,#6938c9,#8247d9,#9653e2) !important;
+    color:#fff !important;
   }
 
-  header.topbar{
-    display:grid !important;
-    grid-template-columns:44px minmax(72px,1fr) max-content !important;
+  /* Encabezado del menú */
+  html body .mobile-menu .mobile-menu-header{
+    min-height:104px !important;
+    padding:18px 15px !important;
+    box-sizing:border-box !important;
+    background:rgba(255,255,255,.10) !important;
+    border-bottom:1px solid rgba(255,255,255,.22) !important;
+  }
+
+  html body .mobile-menu .mobile-menu-brand{
+    background:#fff !important;
+    border-radius:20px !important;
+    padding:8px 12px !important;
+    display:flex !important;
     align-items:center !important;
-    gap:6px !important;
-    height:76px !important;
-    min-height:76px !important;
-    padding:0 8px !important;
-    overflow:visible !important;
-    position:sticky !important;
-    top:0 !important;
-    z-index:100 !important;
+    width:170px !important;
+    height:70px !important;
+    box-shadow:0 8px 20px rgba(59,23,116,.20) !important;
+    box-sizing:border-box !important;
   }
 
-  header.topbar .mobile-menu-btn{
-    display:grid !important;
-    grid-column:1 !important;
-    grid-row:1 !important;
-    position:static !important;
-    transform:none !important;
+  html body .mobile-menu .mobile-menu-brand img{
+    width:100% !important;
+    height:58px !important;
+    object-fit:contain !important;
+  }
+
+  html body .mobile-menu .mobile-menu-close{
     width:44px !important;
     height:44px !important;
-    min-width:44px !important;
-    min-height:44px !important;
-    margin:0 !important;
-    padding:0 !important;
+    flex:0 0 44px !important;
+    border:2px solid rgba(255,255,255,.65) !important;
+    border-radius:12px !important;
+    background:rgba(255,255,255,.16) !important;
+    color:#fff !important;
+    font-size:25px !important;
+    box-shadow:none !important;
   }
 
-  header.topbar .mobile-top-logo{
-    display:block !important;
-    grid-column:2 !important;
-    grid-row:1 !important;
-    position:static !important;
-    transform:none !important;
-    width:100px !important;
-    max-width:100px !important;
-    height:56px !important;
-    margin:0 !important;
-    object-fit:contain !important;
-    object-position:left center !important;
-  }
-
-  header.topbar .top-icons{
+  /* Navegación: mismo lenguaje visual del escritorio */
+  html body .mobile-menu .mobile-menu-nav{
     display:flex !important;
-    grid-column:3 !important;
-    grid-row:1 !important;
-    width:auto !important;
-    min-width:0 !important;
-    margin:0 !important;
-    align-items:center !important;
-    justify-content:flex-end !important;
+    flex-direction:column !important;
+    gap:5px !important;
+    padding:18px 15px 24px !important;
   }
 
-  header.topbar .bell{
-    display:none !important;
-  }
-
-  header.topbar .top-icons .profile{
+  html body .mobile-menu .mobile-menu-item{
     display:flex !important;
     align-items:center !important;
-    justify-content:center !important;
-    width:auto !important;
-    max-width:128px !important;
-    min-width:0 !important;
-    margin:0 !important;
-    padding:6px 7px !important;
-    gap:3px !important;
-    font-size:10.5px !important;
-    line-height:1.1 !important;
-    white-space:nowrap !important;
-    overflow:hidden !important;
-    text-overflow:ellipsis !important;
+    gap:10px !important;
+    width:100% !important;
+    min-height:48px !important;
+    height:48px !important;
+    padding:7px 15px !important;
+    box-sizing:border-box !important;
+    border:0 !important;
+    border-radius:12px !important;
+    background:transparent !important;
+    color:#fff !important;
+    font-family:inherit !important;
+    font-size:15px !important;
+    font-weight:800 !important;
+    text-align:left !important;
+    box-shadow:none !important;
   }
 
-  header.topbar .top-icons .profile .avatar{
-    flex:0 0 auto !important;
-    font-size:18px !important;
-  }
-
-  header.topbar .top-icons .profile .chev{
-    flex:0 0 auto !important;
-  }
-
-  /* Nada decorativo puede flotar sobre la descripción. */
-  .view .page-head::before,
-  .view .page-head::after,
-  .view > .page-head::before,
-  .view > .page-head::after,
-  #nueva .page-head::before,
-  #nueva .page-head::after,
-  #mis .page-head::before,
-  #mis .page-head::after,
-  #favoritos .page-head::before,
-  #favoritos .page-head::after,
-  #perfil .page-head::before,
-  #perfil .page-head::after,
-  #config .page-head::before,
-  #config .page-head::after{
+  html body .mobile-menu .mobile-menu-item::after{
     content:none !important;
     display:none !important;
-    background:none !important;
   }
 
-  .view > .page-head{
-    overflow:hidden !important;
-    min-height:0 !important;
+  html body .mobile-menu .mobile-menu-item > span{
+    width:28px !important;
     height:auto !important;
-    padding:18px !important;
+    flex:0 0 28px !important;
+    display:block !important;
+    padding:0 !important;
+    border-radius:0 !important;
+    background:transparent !important;
+    box-shadow:none !important;
+    text-align:center !important;
+    font-size:21px !important;
   }
 
-  .view > .page-head h1{
-    position:static !important;
-    display:block !important;
-    max-width:100% !important;
-    margin:4px 0 8px !important;
-    padding:0 !important;
-    font-size:24px !important;
-    line-height:1.2 !important;
+  html body .mobile-menu .mobile-menu-item:hover,
+  html body .mobile-menu .mobile-menu-item.active{
+    background:#ffffff2b !important;
+    color:#fff !important;
   }
 
-  .view > .page-head p{
-    position:static !important;
+  /* Pie decorativo en el mismo estilo del sidebar de escritorio */
+  html body .mobile-menu .mobile-menu-nav::after{
+    content:'✦  ★  ✦  ★  🌈  📚  🍎' !important;
     display:block !important;
-    max-width:100% !important;
-    margin:0 !important;
-    padding:0 !important;
-    font-size:13px !important;
-    line-height:1.5 !important;
+    margin-top:18px !important;
+    padding:12px 5px !important;
+    text-align:center !important;
+    color:rgba(255,255,255,.9) !important;
+    background:transparent !important;
+    border:0 !important;
+    border-radius:0 !important;
+    font-size:18px !important;
+    letter-spacing:2px !important;
   }
 }
 
 @media screen and (max-width:380px){
-  header.topbar{
-    grid-template-columns:41px minmax(65px,1fr) max-content !important;
-    gap:4px !important;
-    padding:0 6px !important;
+  html body .mobile-menu .mobile-menu-brand{
+    width:155px !important;
+    height:64px !important;
   }
-  header.topbar .mobile-menu-btn{
-    width:41px !important;
-    height:41px !important;
-    min-width:41px !important;
-    min-height:41px !important;
+
+  html body .mobile-menu .mobile-menu-brand img{
+    height:52px !important;
   }
-  header.topbar .mobile-top-logo{
-    width:88px !important;
-    max-width:88px !important;
-  }
-  header.topbar .top-icons .profile{
-    max-width:119px !important;
-    font-size:10px !important;
+
+  html body .mobile-menu .mobile-menu-item{
+    min-height:48px !important;
+    height:48px !important;
+    font-size:15px !important;
   }
 }

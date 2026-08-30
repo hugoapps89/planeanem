@@ -3446,3 +3446,61 @@
     padding-right: 5px !important;
   }
 }
+
+/* =========================================================
+   PLAN CON IA — ESCRITORIO: ENCABEZADO E INSPIRACIÓN
+   ========================================================= */
+
+/* El icono de notificaciones no se muestra en escritorio.
+   Se conserva para móvil, donde otras reglas lo gestionan. */
+@media screen and (min-width:801px){
+  .topbar .top-icons .bell{
+    display:none !important;
+  }
+
+  .topbar .top-icons{
+    display:flex !important;
+    align-items:center !important;
+    justify-content:flex-end !important;
+  }
+
+  /* Inspiración: iconos alineados, separados y sin deformación. */
+  #inicio .inspire-art{
+    display:flex !important;
+    align-items:center !important;
+    justify-content:center !important;
+    gap:14px !important;
+    min-width:245px !important;
+    padding:10px 6px !important;
+    font-family:"Segoe UI Emoji","Apple Color Emoji","Noto Color Emoji",sans-serif !important;
+    font-size:34px !important;
+    line-height:1 !important;
+    letter-spacing:0 !important;
+    white-space:nowrap !important;
+    transform:none !important;
+  }
+
+  #inicio .inspiration{
+    align-items:center !important;
+  }
+
+  #inicio .inspiration > div:first-child{
+    min-width:0 !important;
+    flex:1 1 auto !important;
+  }
+}
+
+/* En pantallas pequeñas mantenemos la inspiración compacta. */
+@media screen and (max-width:800px){
+  #inicio .inspire-art{
+    display:flex !important;
+    align-items:center !important;
+    justify-content:center !important;
+    gap:8px !important;
+    font-family:"Segoe UI Emoji","Apple Color Emoji","Noto Color Emoji",sans-serif !important;
+    font-size:25px !important;
+    line-height:1 !important;
+    letter-spacing:0 !important;
+    white-space:nowrap !important;
+  }
+}

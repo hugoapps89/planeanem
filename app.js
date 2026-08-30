@@ -32,7 +32,6 @@ const context=document.getElementById('context');
   show(view);
 
   if(view === 'inicio'){
-    updateHomeStats();
     renderHomeRecentPlannings();
   }
   if(view === 'mis'){
@@ -406,119 +405,6 @@ function savePlanning(planning){
 
   return record;
 }
-/* ==========================================================
-   INICIO — ESTADÍSTICAS REALES DE LAS PLANEACIONES
-   ========================================================== */
-function updateHomeStats(){
-  const totalEl = document.getElementById('homeStatTotal');
-  const favoritesEl = document.getElementById('homeStatFavorites');
-  const lastEl = document.getElementById('homeStatLast');
-  const planEl = document.getElementById('homeStatPlan');
-
-  if(!totalEl && !favoritesEl && !lastEl && !planEl) return;
-
-  let saved = [];
-
-  try{
-    saved = JSON.parse(
-      localStorage.getItem('planeanem_planeaciones') || '[]'
-    );
-    if(!Array.isArray(saved)) saved = [];
-  }catch(error){
-    console.error('Error leyendo las estadísticas de Inicio:', error);
-    saved = [];
-  }
-
-  // 1. Total real de planeaciones.
-  if(totalEl){
-    totalEl.textContent = saved.length;
-  }
-
-  // 2. Total real de favoritas.
-  if(favoritesEl){
-    favoritesEl.textContent =
-      saved.filter(item => item.favorite === true).length;
-  }
-
-  // 3. Fecha de la planeación más recientemente creada o actualizada.
-  if(lastEl){
-    if(!saved.length){
-      lastEl.textContent = 'Sin planeaciones';
-      lastEl.title = '';
-    }else{
-      const latest = [...saved].sort((a,b)=>{
-        const dateA = new Date(
-          a.updatedAt || a.createdAt || 0
-        ).getTime();
-
-        const dateB = new Date(
-          b.updatedAt || b.createdAt || 0
-        ).getTime();
-
-        return dateB - dateA;
-      })[0];
-
-      const raw = latest.updatedAt || latest.createdAt;
-      const date = new Date(raw);
-
-      if(!Number.isNaN(date.getTime())){
-        lastEl.textContent = date.toLocaleDateString(
-          'es-MX',
-          {
-            day:'numeric',
-            month:'short',
-            year:'numeric'
-          }
-        ).replace(/\.$/, '');
-
-        lastEl.title = date.toLocaleString('es-MX');
-      }else{
-        lastEl.textContent = 'Sin fecha';
-        lastEl.title = '';
-      }
-    }
-  }
-
-  // 4. Plan actual. Por ahora la plataforma trabaja con GRATUITO.
-  // Si posteriormente existe una clave de suscripción, se podrá conectar aquí.
-  if(planEl){
-    const planKeys = [
-      'planeanem_plan',
-      'planActual',
-      'subscriptionPlan',
-      'planeanem_subscription'
-    ];
-
-    let plan = null;
-
-    for(const key of planKeys){
-      const value = localStorage.getItem(key);
-
-      if(value){
-        plan = value;
-        break;
-      }
-    }
-
-    if(typeof plan === 'string'){
-      try{
-        const parsed = JSON.parse(plan);
-
-        if(parsed && typeof parsed === 'object'){
-          plan =
-            parsed.name ||
-            parsed.plan ||
-            parsed.type ||
-            plan;
-        }
-      }catch(_){}
-    }
-
-    planEl.textContent =
-      String(plan || 'GRATUITO').toUpperCase();
-  }
-}
-
 function updateMisStats(saved){
   const stats = document.querySelector('#misStats');
   if(!stats) return;
@@ -784,8 +670,6 @@ const fieldIcon =
         JSON.stringify(updated)
       );
 
-      updateHomeStats();
-      renderHomeRecentPlannings();
       renderSavedPlannings();
 
     });
@@ -851,9 +735,6 @@ const fieldIcon =
       'planeanem_planeaciones',
       JSON.stringify(saved)
     );
-
-    updateHomeStats();
-    renderHomeRecentPlannings();
 
     this.innerHTML = planning.favorite
       ? '⭐ En favoritos'
@@ -1044,7 +925,6 @@ function handleSavePlanning(){
   document.getElementById('fieldBtn')?.addEventListener('click',()=>{show('nueva');field?.focus();});
   const st=document.createElement('style');st.textContent='.pda-list,.pda-choice{box-sizing:border-box}.pda-choice{display:flex!important;align-items:flex-start;gap:11px;padding:13px!important;margin:0 0 8px!important;background:#fff!important;border:2px solid #e6e0f2!important;border-radius:12px!important;cursor:pointer!important;font-size:13px!important;line-height:1.45}.pda-choice input{width:18px!important;height:18px!important;margin:2px 0 0!important;flex:none;accent-color:#743bd0}.pda-number{font-weight:900;color:#7147c5;min-width:18px}.pda-text{flex:1}.pda-choice:has(input:checked){border-color:#b99be9!important;background:#f8f3ff!important}.pda-empty{padding:12px;border-radius:10px;background:#f7f5fa;color:#777}';document.head.appendChild(st);
   refresh();
-  updateHomeStats();
   renderHomeRecentPlannings();
   show('inicio');
 }
@@ -1256,8 +1136,6 @@ function renderFavoritePlannings() {
         JSON.stringify(saved)
       );
 
-      updateHomeStats();
-      renderHomeRecentPlannings();
       renderFavoritePlannings();
       renderSavedPlannings();
 
@@ -1306,11 +1184,3 @@ function renderFavoritePlannings() {
   if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',initMobileMenu,{once:true});
   else initMobileMenu();
 })();
-
-/* Sincronizar Inicio si una planeación cambia en otra pestaña. */
-window.addEventListener('storage', function(event){
-  if(event.key === 'planeanem_planeaciones'){
-    updateHomeStats();
-    renderHomeRecentPlannings();
-  }
-});

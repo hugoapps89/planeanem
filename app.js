@@ -1184,3 +1184,61 @@ function renderFavoritePlannings() {
   });
 
 }
+/* =====================================================
+   MENÚ MÓVIL
+   ===================================================== */
+(function initMobileMenu() {
+  const openBtn = document.getElementById('mobileMenuBtn');
+  const closeBtn = document.getElementById('mobileMenuClose');
+  const overlay = document.getElementById('mobileMenuOverlay');
+  const mobileMenu = document.getElementById('mobileMenu');
+
+  if (!openBtn || !closeBtn || !overlay || !mobileMenu) {
+    console.warn('Menú móvil: elementos no encontrados.');
+    return;
+  }
+
+  function openMobileMenu() {
+    document.body.classList.add('mobile-menu-open');
+    openBtn.setAttribute('aria-expanded', 'true');
+  }
+
+  function closeMobileMenu() {
+    document.body.classList.remove('mobile-menu-open');
+    openBtn.setAttribute('aria-expanded', 'false');
+  }
+
+  openBtn.addEventListener('click', openMobileMenu);
+  closeBtn.addEventListener('click', closeMobileMenu);
+  overlay.addEventListener('click', closeMobileMenu);
+
+  mobileMenu.querySelectorAll('[data-view]').forEach(button => {
+    button.addEventListener('click', function () {
+      const viewId = this.dataset.view;
+
+      document.querySelectorAll('.view').forEach(view => {
+        view.classList.toggle('active', view.id === viewId);
+      });
+
+      document.querySelectorAll('.menu-item, .mobile-menu-nav button').forEach(item => {
+        item.classList.toggle('active', item.dataset.view === viewId);
+      });
+
+      closeMobileMenu();
+
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    });
+  });
+
+  document.addEventListener('keydown', function (event) {
+    if (event.key === 'Escape') {
+      closeMobileMenu();
+    }
+  });
+
+  closeMobileMenu();
+
+})();

@@ -3555,3 +3555,56 @@
   .bap-option strong{font-size:13px;}
   .bap-option small{font-size:11.5px;}
 }
+
+
+/* =========================================================
+   EXÁMENES — integrado en la vista principal
+   ========================================================= */
+/* Módulo Exámenes integrado con PlaneaNEM */
+.examenes-view .exam-app{max-width:1100px;margin:auto;padding:24px}.examenes-view .exam-head{display:flex;justify-content:space-between;gap:20px;align-items:center;margin-bottom:20px}.examenes-view .exam-head span{font-size:12px;font-weight:800;color:#7444c8;letter-spacing:1px}.examenes-view .exam-head h1{margin:5px 0;font-size:32px}.examenes-view .exam-head p{margin:0;color:#6f687c}.examenes-view .exam-card{background:#fff;border:1px solid #e8e2f1;border-radius:18px;padding:22px;margin:16px 0;box-shadow:0 8px 24px #3020500d}.examenes-view .exam-card h2{margin-top:0}.examenes-view .exam-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.examenes-view .exam-grid label{font-weight:700;font-size:14px}.examenes-view .exam-grid select,.examenes-view .exam-grid input{display:block;width:100%;margin-top:7px;padding:12px;border:1px solid #dcd5e8;border-radius:10px;background:#fff}.examenes-view .exam-choices{display:grid;gap:10px}.examenes-view .exam-choice{display:flex;gap:10px;align-items:flex-start;padding:13px;border:1px solid #e2dbea;border-radius:12px;background:#fcfbfe}.examenes-view .exam-choice input{margin-top:4px}.examenes-view .exam-choice strong{display:block}.examenes-view .exam-choice small{display:block;color:#746d7d;margin-top:3px;line-height:1.4}.examenes-view .exam-primary{margin-top:18px;border:0;border-radius:12px;padding:13px 20px;background:#7444c8;color:#fff;font-weight:800;cursor:pointer}.examenes-view .exam-hidden{display:none}.examenes-view .exam-result{line-height:1.55}.examenes-view .exam-title{text-align:center}.examenes-view .question{padding:18px 0;border-top:1px solid #eee}.examenes-view .question h3{margin:0 0 8px}.examenes-view .meta{font-size:12px;color:#765c9d;margin-bottom:10px}.examenes-view .answers{margin:10px 0 0 20px}.examenes-view .key{background:#faf7ff;border-radius:12px;padding:14px;margin-top:20px}.examenes-view .pda-group{border:1px solid #e4dced;border-radius:14px;padding:16px;margin:12px 0;background:#fcfbff}.examenes-view .pda-group-title{font-weight:800;color:#5d3995;line-height:1.45;margin-bottom:10px}.examenes-view .pda-group-label{font-size:13px;font-weight:800;margin-bottom:7px}@media(max-width:700px){.examenes-view .exam-app{padding:14px}.examenes-view .exam-head{display:block}.examenes-view .exam-grid{grid-template-columns:1fr}.examenes-view .exam-head h1{font-size:26px}.topbar .mobile-top-logo{max-height:48px;width:auto}}@media print{.examenes-view .exam-primary{display:none!important}.examenes-view .exam-app{max-width:none;padding:0}.examenes-view .exam-card{box-shadow:none;border:0}}
+
+
+/* Integración visual con PlaneaNEM */
+.examenes-view .exam-app{
+  width:100%;
+  max-width:1500px;
+  margin:0 auto;
+  padding:30px 38px 45px;
+}
+.examenes-view .exam-head{
+  background:linear-gradient(135deg,#fff,#f5eeff);
+  border:1px solid #eadff9;
+  border-radius:22px;
+  padding:25px;
+  position:relative;
+  margin-bottom:20px;
+  box-shadow:0 8px 22px #4b32700b;
+}
+.examenes-view .exam-head span{color:#6d35cf}
+.examenes-view .exam-head h1{color:#252b50}
+.examenes-view .exam-card{border:1px solid #e2e4eb;box-shadow:0 7px 22px #4b32700b}
+.examenes-view .exam-primary{background:linear-gradient(90deg,#7133ce,#9b4bdb)}
+
+
+
+
+@media(max-width:800px){
+  .examenes-view .exam-app{
+    padding:16px 13px 92px;
+  }
+  .examenes-view .exam-head{
+    padding:19px;
+    border-radius:20px;
+  }
+  .examenes-view .exam-head h1{font-size:24px;line-height:1.2}
+  .examenes-view .exam-head p{font-size:13px}
+}
+
+/* Navegación integrada: los apartados del menú son enlaces, no texto subrayado */
+
+.sidebar .menu-item.active {
+  background:#ffffff2b;
+}
+
+
+

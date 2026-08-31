@@ -13,8 +13,6 @@
     '5': () => window.PLANEAnEM_FASE_5
   };
 
-  // Normaliza cortes tipográficos procedentes de saltos de línea de los documentos fuente.
-  // Ejemplos: "car- teles" → "carteles", "con- oce" → "conoce".
   function normalizeText(text) {
     if (!text) return '';
     return String(text)
@@ -84,4 +82,24 @@
   window.addEventListener('load', () => { setPhase(); updateFields(); });
   setPhase();
   updateFields();
+
+  // Integra Exámenes al menú existente sin alterar los demás apartados.
+  function addExamMenuLink() {
+    const add = (selector, className) => {
+      const nav = document.querySelector(selector);
+      if (!nav || nav.querySelector('a[data-examenes-link]')) return;
+      const a = document.createElement('a');
+      a.href = 'examenes.html';
+      a.className = className;
+      a.dataset.examenesLink = 'true';
+      a.innerHTML = '<span>📝</span>Exámenes';
+      const favoritos = [...nav.children].find(x => x.dataset?.view === 'favoritos');
+      if (favoritos) favoritos.insertAdjacentElement('afterend', a);
+      else nav.appendChild(a);
+    };
+    add('.menu', 'menu-item');
+    add('.mobile-menu-nav', 'mobile-menu-item');
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', addExamMenuLink);
+  else addExamMenuLink();
 })();

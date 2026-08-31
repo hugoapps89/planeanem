@@ -3608,3 +3608,40 @@
 
 
 
+
+
+/* Exámenes integrado: evitar duplicación visual de menús */
+@media screen and (min-width: 801px){
+  html body .mobile-menu,
+  html body #mobileMenu,
+  html body .mobile-menu-overlay,
+  html body #mobileMenuOverlay{
+    display:none !important;
+    visibility:hidden !important;
+    opacity:0 !important;
+    pointer-events:none !important;
+  }
+}
+@media screen and (max-width: 800px){
+  html body .sidebar{
+    display:none !important;
+  }
+}
+
+
+/* Exámenes integrado: mismo estado visual que cualquier otro apartado. */
+.sidebar .menu-item[data-view="examenes"],
+.sidebar .menu-item[data-view="examenes"]:hover,
+.sidebar .menu-item[data-view="examenes"].active,
+.mobile-menu .mobile-menu-item[data-view="examenes"],
+.mobile-menu .mobile-menu-item[data-view="examenes"]:hover,
+.mobile-menu .mobile-menu-item[data-view="examenes"].active {
+  text-decoration: none !important;
+  -webkit-text-decoration: none !important;
+}
+
+/* El estado activo no cambia el menú completo, solo el botón seleccionado. */
+.sidebar .menu-item.active[data-view="examenes"] {
+  background: #ffffff2b;
+  color: #fff;
+}

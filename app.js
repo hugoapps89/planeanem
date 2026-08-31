@@ -21,7 +21,20 @@ const context=document.getElementById('context');
 
   function show(id){
     views.forEach(v=>v.classList.toggle('active',v.id===id));
-    items.forEach(x=>x.classList.toggle('active',x.dataset.view===id));
+
+    // Solo el menú visible recibe el estado activo.
+    const desktopItems = [...document.querySelectorAll('.sidebar .menu-item[data-view]')];
+    const mobileItems = [...document.querySelectorAll('.mobile-menu .mobile-menu-item[data-view]')];
+
+    desktopItems.forEach(item => item.classList.remove('active'));
+    mobileItems.forEach(item => item.classList.remove('active'));
+
+    const mobile = window.matchMedia('(max-width: 800px)').matches;
+    const visibleItems = mobile ? mobileItems : desktopItems;
+    visibleItems
+      .filter(item => item.dataset.view === id)
+      .forEach(item => item.classList.add('active'));
+
     if(id==='nueva') setTimeout(refresh,50);
     window.scrollTo({top:0,behavior:'smooth'});
   }

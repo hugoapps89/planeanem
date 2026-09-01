@@ -132,6 +132,10 @@ if(form){
     window.PLANEANEM_USER_ROLE = 'docente';
     location.reload();
   };
+
+  // Cerrar DOMContentLoaded
+  });
+
 })();
 
 /* PlaneaNEM - navegación y asistente | interfaz Mis planeaciones v46 */

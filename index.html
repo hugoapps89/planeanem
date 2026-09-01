@@ -1,6 +1,39 @@
 <!doctype html>
-<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Plan con IA | Inicio</title><link rel="stylesheet" href="style.css?v=50">
+<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Plan con IA | Inicio</title><link rel="stylesheet" href="style.css?v=52">
+
+
+
+
+<script>
+/* Plan con IA — sesión local de demostración.
+   En producción, PLANЕANEM_USER_ROLE deberá venir de autenticación real.
+   No se usan credenciales administrativas dentro del código cliente. */
+window.PLANEANEM_USER_ROLE = 'docente';
+</script>
+
 </head><body>
+
+<!-- Acceso seguro de demostración para Plan con IA -->
+<div id="login-screen" class="login-screen" aria-hidden="false">
+  <div class="login-card">
+    <img src="assets/logo-plan-con-ia.png" alt="Plan con IA" class="login-logo">
+    <div class="login-kicker">ACCESO A PLAN CON IA</div>
+    <h1>Iniciar sesión</h1>
+    <p>Ingresa para acceder a tus herramientas y, si tienes permisos, al área de administración.</p>
+    <form id="loginForm" autocomplete="on">
+      <label>Correo electrónico
+        <input id="loginEmail" type="email" placeholder="correo@ejemplo.com" autocomplete="username" required>
+      </label>
+      <label>Contraseña
+        <input id="loginPassword" type="password" placeholder="••••••••" autocomplete="current-password" required>
+      </label>
+      <button type="submit" class="login-btn">Iniciar sesión</button>
+      <button type="button" id="guestLogin" class="guest-btn">Continuar como docente</button>
+      <div id="loginMessage" class="login-message" role="alert"></div>
+    </form>
+  </div>
+</div>
+
 <div class="app"><aside class="sidebar"><a href="#inicio" class="brand-card brand-logo-image" id="brandHome" aria-label="Ir a la página principal"><img src="assets/logo-plan-con-ia.png" alt="Plan con IA"></a><nav class="menu">
 
   <button class="menu-item active" data-view="inicio">
@@ -27,6 +60,7 @@
     Exámenes
   </button>
 
+  <button class="menu-item admin-menu-item" data-view="admin" data-role="admin" hidden><span>🔐</span>Administrador</button>
   <button class="menu-item" data-view="perfil">
     <span>👩‍🏫</span>
     Mi perfil
@@ -54,6 +88,7 @@
     <button type="button" class="mobile-menu-item" data-view="mis"><span>📚</span>Mis planeaciones</button>
     <button type="button" class="mobile-menu-item" data-view="favoritos"><span>⭐</span>Favoritos</button>
     <button type="button" class="mobile-menu-item" data-view="examenes"><span>📝</span>Exámenes</button>
+    <button type="button" class="mobile-menu-item admin-menu-item" data-view="admin" data-role="admin" hidden><span>🔐</span>Administrador</button>
     <button type="button" class="mobile-menu-item" data-view="perfil"><span>👩🏻‍🏫</span>Mi perfil</button>
     <button type="button" class="mobile-menu-item" data-view="config"><span>⚙️</span>Configuración</button>
   </nav>
@@ -127,7 +162,17 @@
 </section>
 
 
+<section id="admin" class="view"><div class="page-head"><span>CENTRO DE CONTROL</span><h1>🔐 Administrador</h1><p>Administra y consulta las principales áreas de PlaneaNEM.</p></div><div class="admin-grid">
+<article class="admin-card"><span>📊</span><div><h2>Panel general</h2><p>Indicadores y actividad de la plataforma.</p></div><button type="button">Abrir</button></article>
+<article class="admin-card"><span>👥</span><div><h2>Usuarios</h2><p>Gestiona docentes y permisos de acceso.</p></div><button type="button">Abrir</button></article>
+<article class="admin-card"><span>📚</span><div><h2>Base curricular</h2><p>Administra contenidos, PDA, grados y fases.</p></div><button type="button">Abrir</button></article>
+<article class="admin-card"><span>📝</span><div><h2>Exámenes</h2><p>Administra opciones y estadísticas.</p></div><button type="button">Abrir</button></article>
+<article class="admin-card"><span>🧠</span><div><h2>Plan con IA</h2><p>Configura las herramientas de generación.</p></div><button type="button">Abrir</button></article>
+<article class="admin-card"><span>📈</span><div><h2>Estadísticas</h2><p>Consulta el uso de PlaneaNEM.</p></div><button type="button">Abrir</button></article></div>
+<div class="admin-note">🔒 <strong>Área administrativa</strong><p>La interfaz está preparada. La autenticación y permisos reales deberán validarse en un backend antes de habilitar funciones sensibles.</p></div></section>
+
 <section id="perfil" class="view">
+<div class="session-tools"><button type="button" onclick="planConIaLogout()">Cerrar sesión</button></div>
 
   <div class="page-head">
     <h1>👩‍🏫 Mi perfil</h1>
@@ -344,4 +389,4 @@
 <section class="exam-card"><h2>🎯 3. PDA</h2><p>Selecciona los PDA que deseas evaluar. Se muestran separados igual que en Nueva planeación.</p><div id="examPdas" class="exam-choices"></div></section>
 <section class="exam-card"><h2>⚙️ 4. Configuración</h2><div class="exam-grid"><label>Número de preguntas<select id="examCount"><option>5</option><option selected>10</option><option>15</option><option>20</option></select></label><label>Tipo de preguntas<select id="examType"><option value="mixed">Mixto</option><option value="multiple">Opción múltiple</option><option value="open">Respuesta abierta</option><option value="problem">Situación problemática</option></select></label><label>Nombre del examen<input id="examName" placeholder="Evaluación de aprendizaje"></label></div><button id="examGenerate" class="exam-primary">✨ Generar examen</button></section>
 <section id="examResult" class="exam-card result hidden"></section></section></main></div>
-<script src="curriculum/fase3.js?v=28"></script><script src="curriculum/fase4.js?v=28"></script><script src="curriculum/fase5.js?v=28"></script><script src="app.js?v=50"></script><script src="curriculum-loader.js?v=32"></script><script>document.getElementById('brandHome')?.addEventListener('click',function(e){e.preventDefault();document.querySelectorAll('.view').forEach(v=>v.classList.toggle('active',v.id==='inicio'));document.querySelectorAll('[data-view]').forEach(x=>x.classList.toggle('active',x.dataset.view==='inicio'));window.scrollTo({top:0,behavior:'smooth'});});</script></body></html>
+<script src="curriculum/fase3.js?v=28"></script><script src="curriculum/fase4.js?v=28"></script><script src="curriculum/fase5.js?v=28"></script><script src="app.js?v=52"></script><script src="curriculum-loader.js?v=32"></script><script>document.getElementById('brandHome')?.addEventListener('click',function(e){e.preventDefault();document.querySelectorAll('.view').forEach(v=>v.classList.toggle('active',v.id==='inicio'));document.querySelectorAll('[data-view]').forEach(x=>x.classList.toggle('active',x.dataset.view==='inicio'));window.scrollTo({top:0,behavior:'smooth'});});</script></body></html>

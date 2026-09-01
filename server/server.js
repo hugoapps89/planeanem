@@ -38,6 +38,46 @@ async function initializeDatabase() {
 
   console.log('Base de datos de Plan con IA conectada');
   console.log('Tabla usuarios verificada');
+
+  // Crear administrador inicial únicamente cuando Render
+  // proporcione las variables de entorno correspondientes.
+  const adminEmail = process.env.ADMIN_EMAIL;
+  const adminPassword = process.env.ADMIN_PASSWORD;
+  const adminNombre = process.env.ADMIN_NAME || 'Administrador';
+
+  if (!adminEmail || !adminPassword) {
+    console.log('Administrador inicial no configurado.');
+    return;
+  }
+
+  if (adminPassword.length < 8) {
+    throw new Error('ADMIN_PASSWORD debe tener al menos 8 caracteres.');
+  }
+
+  const existente = await pool.query(
+    'SELECT id, rol FROM usuarios WHERE LOWER(email) = LOWER($1)',
+    [adminEmail]
+  );
+
+  if (existente.rows.length > 0) {
+    console.log('El administrador inicial ya existe.');
+    return;
+  }
+
+  const bcrypt = require('bcryptjs');
+  const passwordHash = await bcrypt.hash(adminPassword, 12);
+
+  await pool.query(
+    `
+    INSERT INTO usuarios
+      (nombre, email, password_hash, rol)
+    VALUES
+      ($1, $2, $3, 'admin')
+    `,
+    [adminNombre, adminEmail.toLowerCase(), passwordHash]
+  );
+
+  console.log('Administrador inicial creado correctamente.');
 }
 
 // Estado del backend

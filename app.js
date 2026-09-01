@@ -127,14 +127,19 @@ if(form){
       updateLoginUI();
     });
   }
-  window.planConIaLogout = function(){
-    localStorage.removeItem(LOGIN_KEY);
-    window.PLANEANEM_USER_ROLE = 'docente';
-    location.reload();
-  };
+ window.planConIaLogout = function(){
 
-  // Cerrar DOMContentLoaded
-  });
+  localStorage.removeItem(LOGIN_KEY);
+
+  window.PLANEANEM_USER_ROLE = 'docente';
+
+  location.reload();
+
+};
+
+// Cerrar DOMContentLoaded
+
+});
 
 })();
 

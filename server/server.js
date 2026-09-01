@@ -1,8 +1,13 @@
 const express = require('express');
+const cors = require('cors');
 const { Pool } = require('pg');
 const bcrypt = require('bcryptjs');
 const app = express();
 const PORT = process.env.PORT || 3000;
+
+app.use(cors({
+  origin: 'https://hugoapps89.github.io'
+}));
 
 app.use(express.json());
 

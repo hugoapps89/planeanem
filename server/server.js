@@ -120,6 +120,76 @@ app.get('/api/db-health', async (req, res) => {
     });
   }
 });
+// Inicio de sesión de usuarios
+app.post('/api/login', async (req, res) => {
+  if (!pool) {
+    return res.status(503).json({
+      ok: false,
+      message: 'La base de datos no está disponible.'
+    });
+  }
+
+  try {
+    const email = String(req.body?.email || '').trim().toLowerCase();
+    const password = String(req.body?.password || '');
+
+    if (!email || !password) {
+      return res.status(400).json({
+        ok: false,
+        message: 'Correo y contraseña son obligatorios.'
+      });
+    }
+
+    const result = await pool.query(
+      `
+      SELECT id, nombre, email, password_hash, rol
+      FROM usuarios
+      WHERE LOWER(email) = LOWER($1)
+      LIMIT 1
+      `,
+      [email]
+    );
+
+    if (result.rows.length === 0) {
+      return res.status(401).json({
+        ok: false,
+        message: 'Credenciales incorrectas.'
+      });
+    }
+
+    const usuario = result.rows[0];
+
+    const passwordCorrecta = await bcrypt.compare(
+      password,
+      usuario.password_hash
+    );
+
+    if (!passwordCorrecta) {
+      return res.status(401).json({
+        ok: false,
+        message: 'Credenciales incorrectas.'
+      });
+    }
+
+    res.json({
+      ok: true,
+      user: {
+        id: usuario.id,
+        nombre: usuario.nombre,
+        email: usuario.email,
+        rol: usuario.rol
+      }
+    });
+
+  } catch (error) {
+    console.error('Error en /api/login:', error.message);
+
+    res.status(500).json({
+      ok: false,
+      message: 'Error interno del servidor.'
+    });
+  }
+});
 async function startServer() {
   try {
     await initializeDatabase();

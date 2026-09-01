@@ -1,9 +1,160 @@
+
+(function(){
+  'use strict';
+
+  const LOGIN_KEY = 'planconia_session';
+
+  function session(){
+    try { return JSON.parse(localStorage.getItem(LOGIN_KEY) || 'null'); }
+    catch(e){ return null; }
+  }
+
+  function setRole(role, email=''){
+    window.PLANEANEM_USER_ROLE = role || 'docente';
+    localStorage.setItem(LOGIN_KEY, JSON.stringify({
+      role: window.PLANEANEM_USER_ROLE,
+      email: email,
+      loggedAt: new Date().toISOString()
+    }));
+  }
+
+  function updateLoginUI(){
+    const screen = document.getElementById('login-screen');
+    if(!screen) return;
+    const s = session();
+    if(s && (s.role === 'docente' || s.role === 'admin')){
+      window.PLANEANEM_USER_ROLE = s.role;
+      screen.classList.add('is-hidden');
+      screen.setAttribute('aria-hidden','true');
+    }else{
+      window.PLANEANEM_USER_ROLE = 'docente';
+      screen.classList.remove('is-hidden');
+      screen.setAttribute('aria-hidden','false');
+    }
+  }
+
+  document.addEventListener('DOMContentLoaded', ()=>{
+    updateLoginUI();
+
+    const form = document.getElementById('loginForm');
+const guest = document.getElementById('guestLogin');
+const msg = document.getElementById('loginMessage');
+
+if(form){
+  form.addEventListener('submit', async e => {
+    e.preventDefault();
+
+    const email = document.getElementById('loginEmail')?.value.trim() || '';
+    const password = document.getElementById('loginPassword')?.value || '';
+
+    if(!email || !password){
+      if(msg) msg.textContent = 'Completa tu correo y contraseña.';
+      return;
+    }
+
+    if(msg) msg.textContent = 'Iniciando sesión...';
+
+    try {
+      const response = await fetch(
+        'https://plan-con-ia-backend.onrender.com/api/login',
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            email,
+            password
+          })
+        }
+      );
+
+      const data = await response.json();
+
+      if(!response.ok || !data.ok){
+        if(msg){
+          msg.textContent = data.message || 'No se pudo iniciar sesión.';
+        }
+        return;
+      }
+
+      const user = data.user;
+
+      // El rol viene directamente del backend.
+      setRole(user.rol, user.email);
+
+      // Guardamos también los datos básicos del usuario.
+      localStorage.setItem(
+        'planconia_user',
+        JSON.stringify({
+          id: user.id,
+          nombre: user.nombre,
+          email: user.email,
+          rol: user.rol
+        })
+      );
+
+      if(msg) msg.textContent = '';
+
+      updateLoginUI();
+
+    } catch(error) {
+      console.error('Error de inicio de sesión:', error);
+
+      if(msg){
+        msg.textContent =
+          'No se pudo conectar con el servidor. Intenta nuevamente.';
+      }
+    }
+  });
+}
+  if(guest){
+    guest.addEventListener('click', () => {
+      setRole('docente', '');
+
+      localStorage.setItem(
+        'planconia_user',
+        JSON.stringify({
+          id: null,
+          nombre: 'Docente',
+          email: '',
+          rol: 'docente'
+        })
+      );
+
+      if(msg) msg.textContent = '';
+
+      updateLoginUI();
+    });
+  }
+  window.planConIaLogout = function(){
+    localStorage.removeItem(LOGIN_KEY);
+    window.PLANEANEM_USER_ROLE = 'docente';
+    location.reload();
+  };
+})();
+
 /* PlaneaNEM - navegación y asistente | interfaz Mis planeaciones v46 */
 (function(){
 'use strict';
 function init(){
   const views=[...document.querySelectorAll('.view')];
   const items=[...document.querySelectorAll('[data-view]')];
+
+  function applyRoleAccess(){
+    const role = String(window.PLANEANEM_USER_ROLE || 'docente').toLowerCase();
+    const isAdmin = role === 'admin' || role === 'administrador';
+    document.querySelectorAll('[data-role="admin"]').forEach(el => {
+      el.hidden = !isAdmin;
+      el.setAttribute('aria-hidden', isAdmin ? 'false' : 'true');
+    });
+    const adminView = document.getElementById('admin');
+    if(adminView) adminView.hidden = !isAdmin;
+    return isAdmin;
+  }
+
+  applyRoleAccess();
+
   const steps=[...document.querySelectorAll('.step')];
   const form=document.getElementById('form');
   const grade=document.getElementById('grade');
@@ -20,6 +171,10 @@ const context=document.getElementById('context');
   const phaseByGrade={1:3,2:3,3:4,4:4,5:5,6:5};
 
   function show(id){
+    if(id==='admin' && !applyRoleAccess()){
+      return;
+    }
+
     views.forEach(v=>v.classList.toggle('active',v.id===id));
 
     // Solo el menú visible recibe el estado activo.

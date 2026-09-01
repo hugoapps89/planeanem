@@ -1,6 +1,5 @@
 const express = require('express');
 const { Pool } = require('pg');
-const bcrypt = require('bcryptjs');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -65,7 +64,6 @@ async function initializeDatabase() {
     return;
   }
 
-  const bcrypt = require('bcryptjs');
   const passwordHash = await bcrypt.hash(adminPassword, 12);
 
   await pool.query(
